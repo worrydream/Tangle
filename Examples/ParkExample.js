@@ -2,7 +2,7 @@
 //  ParkExample.js
 //  Tangle
 //
-//  Created by Bret Victor on 6/10/11.
+//  Created by Bret Victor on 3/10/11.
 //  (c) 2011 Bret Victor.  MIT open-source license.
 //
 
