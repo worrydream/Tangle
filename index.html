@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <base target="_top">
+    <title>Tangle: a JavaScript library for reactive documents</title>
+
+    <!-- stylesheets -->
+	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+
+    <!-- Tangle -->
+    <script type="text/javascript" src="Tangle.js"></script>
+
+    <!-- TangleKit -->
+    <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
+    <script type="text/javascript" src="TangleKit/mootools.js"></script>
+    <script type="text/javascript" src="TangleKit/sprintf.js"></script>
+    <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
+    <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
+
+    <!-- examples -->
+    <script type="text/javascript" src="Examples/CookieExample.js"></script>
+    <script type="text/javascript" src="Examples/ParkExample.js"></script>
+
+</head>
+
+<body>
+<div id="everything">
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- header -->
+
+<div id="header">
+
+<h1><a href="./">tangle</a></h1>
+<h3>explorable explanations made easy</h3>
+
+<div id="menu">
+    <a id="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a id="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a id="menuDownload" href="download.html">Download</a>
+</div>
+
+</div> <!-- header -->
+    
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- body -->
+
+<div id="body">
+
+<p>Tangle is a JavaScript library for creating <b>reactive documents</b>.  Your readers can interactively explore
+possibilities, play with parameters, and see the document update immediately.</p>
+
+<p>This is a simple reactive document.<p>
+
+<div id="cookieExample" class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you will consume <span data-var="calories"></span> calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>This is the HTML for that example.</p>
+
+<div class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <code>When you eat <b>&lt;span data-var="cookies" class="TKAdjustableNumber"&gt;</b> cookies<b>&lt;/span&gt;</b>, you<br>
+will consume <b>&lt;span data-var="calories"&gt;</b> calories<b>&lt;/span&gt;</b>.</code>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>And this is the JavaScript.</p>
+
+<div class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <code>var tangle = new Tangle(document, {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>initialize:</b> function () {  <b>this.cookies = 4;</b>  },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>update:</b> &nbsp;&nbsp;&nbsp;&nbsp;function () {  <b>this.calories = this.cookies * 50;</b>  }<br>
+});</code>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>Write your document with HTML and CSS, as you normally would.  Use special HTML attributes to indicate <b>variables</b>.  Write a little JavaScript to specify how your variables are calculated.  Tangle ties it all together.</p>
+
+<p style="text-align:center; margin-top:30px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
+
+<p style="">Try out some examples.</p>
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- park example -->
+
+<div class="example">
+<div class="exampleTop"></div>
+<div class="exampleCenter">
+<div id="parkExample">
+
+	<h5>Proposition 21:  Vehicle License Fee for State Parks</h5>
+	
+	<h6>The way it is now:</h6>
+ 
+	<p>California has <span data-var="parkCount"></span> state parks, including state beaches and historic parks. 
+		The current $<span data-var="oldBudget" data-format="e6"></span> million budget is insufficient to maintain these parks, 
+		and <span data-var="oldClosedParkCount"></span> parks will be shut down at least part-time.
+		Most parks charge <span data-var="oldAdmission" data-format="dollars"></span> per vehicle for admission.</p>
+
+	<h6>What Prop 21 would do:</h6>
+ 
+	<p>Proposes to charge car owners an extra $18 on their annual registration bill, to go into the state park fund.  Cars that pay the charge would have free park admission.</p>
+
+	<h6>Analysis:</h6>
+
+	<p>Suppose that an extra
+		<span data-var="tax" data-format="$%d" class="TKAdjustableNumber" data-min="0" data-max="50"></span> was charged to
+		<span data-var="percentCompliance" class="TKAdjustableNumber" data-min="0" data-max="100" data-step="5">%</span> of
+		<span data-var="isTaxPerVehicle" class="TKToggle TKIfElse"><span>vehicle registrations</span><span>California taxpayers</span></span>.
+		Park admission would be <span data-var="newAdmission" data-format="free" class="TKAdjustableNumber" data-min="0" data-max="25"></span> for
+		<span data-var="newAdmissionAppliesToEveryone" class="TKToggle TKIfElse"><span>everyone</span><span>those who paid the charge</span></span>.
+	</p>
+	
+	<p>This would <span data-var="deltaBudget" class="TKPlusMinus"><span>collect an extra</span><span>lose</span></span>
+		$<span data-var="deltaBudget" data-format="abs_e6"></span> million
+		($<span data-var="taxCollected" data-format="e6"></span> million from the tax,
+		<span data-var="deltaRevenue" class="TKPlusMinus"><span>plus</span><span>minus</span></span>
+		$<span data-var="deltaRevenue" data-format="abs_e6"></span> million
+		<span data-var="deltaRevenue" class="TKPlusMinus"><span>additional</span><span>lost</span></span> revenue from admission)
+		for a total state park budget of $<span data-var="budget" data-format="e6"></span> million.
+		
+	<span data-var="scenarioIndex" class="TKSwitch">
+			<span>This is not sufficient to maintain the parks, and
+				<span data-var="closedParkCount"></span>	parks would be shut down at least part-time.</span>
+			<span>This is sufficient to maintain the parks in their current state, but not fund
+				a program to bring safety and cleanliness up to acceptable standards.</span>
+			<span>This is sufficient to maintain the parks in their current state, plus fund a program to 
+				bring safety and cleanliness up to acceptable standards over the next
+				<span data-var="restorationTime"></span> years.</span>
+			<span>This is sufficient to maintain the parks and bring safety and cleanliness up to acceptable standards,
+				leaving a $<span data-var="surplus" data-format="e6"></span> million per year surplus.</span>
+		</span>
+	</p>
+	
+	<p>Park attendance would
+		<span data-var="deltaVisitorCount" class="TKPlusMinus"><span>rise</span><span>fall</span></span> by
+	 	<span data-var="relativeVisitorCount" data-format="percent"></span>, to
+	 	<span data-var="newVisitorCount" data-format="e6"></span> million visits each year.</p>
+</div>
+</div>
+<div class="exampleBottom"></div>
+</div>
+
+
+</div> <!-- body -->
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- footer -->
+
+<div id="footer">
+<div id="footerShadow"></div>
+
+<p>Next: See more examples.</p>
+
+</div> <!-- footer -->
+
+
+</div> <!-- everything -->
+</body></html>

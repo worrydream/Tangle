@@ -1,0 +1,388 @@
+* { margin: 0; padding: 0; }
+
+body {
+  background: #eee0c7;
+  font: 14px "Lato", "Helvetica", "Arial", sans-serif;
+  line-height:1.4;
+  color: #553f19;
+  width: 100%;
+  margin-top:0;
+}
+
+.small {
+  font-size:13px;
+}
+
+#everything {
+  width: 818px;
+  background-image: url(Images/BodyBackground.png);
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height:100%;
+}
+
+#header {
+  background-image: url(Images/Header.png);
+  margin-left:9px;
+  margin-right:9px;
+  width:800px;
+  height:78px;
+}
+
+#header {
+  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  position: relative;
+}
+
+#header h1 {
+  font-size: 42px;
+  color: #fff;
+  position:absolute;
+  left: 35px;
+  top: -2px;
+}
+
+#header h1 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#header h1 a:hover {
+  color: #fad595;
+}
+
+#header h3 {
+  font: 12px "Lato", "Helvetica", "Arial", sans-serif;
+  color: #aa8d5a;
+  position:absolute;
+  left: 42px;
+  top: 53px;
+}
+
+#header #menu {
+  position: absolute;
+  left: 400px;
+  top: 50px;
+}
+
+#header #menu a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #fff;
+}
+
+#header #menu a:hover {
+  color: #fad595;
+  text-decoration: underline;
+}
+
+#footer {
+  background-image: url(Images/FooterBackground.png);
+  margin-left:9px;
+  margin-right:9px;
+  width:800px;
+  height:78px;
+}
+
+#footerShadow {
+  position:absolute;
+  background-image: url(Images/FooterTop.png);
+  width:800px;
+  height:36px;
+}
+
+#body {
+  margin-left:51px;
+  margin-right:51px;
+  margin-top:20px;
+  margin-bottom:25px;
+}
+
+.example {
+  font: 16px "Times New Roman", "Times", serif;
+  width:735px;
+  margin-left:-10px;
+}
+
+.example p {
+  margin:0;
+  color:#444;
+}
+
+.example code {
+  font-size:12px;
+  color:#888;
+}
+
+.example code b {
+  font-weight:bold;
+  color:#222;
+}
+
+.exampleTop {
+  background-image: url(Images/ExampleTop.png);
+  width:735px;
+  height:9px;
+}
+
+.exampleCenter {
+  background-image: url(Images/ExampleCenter.png);
+  width:655px;
+  padding-top:10px;
+  padding-left:40px;
+  padding-right:40px;
+  padding-bottom:8px;
+}
+
+.exampleBottom {
+  background-image: url(Images/ExampleBottom.png);
+  width:735px;
+  height:25px;
+}
+
+p {
+  margin-top:15px;
+  margin-bottom:15px;
+}
+
+.small p {
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+a {
+  color: #c25106;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #a24106;
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h2 {
+  font: 24px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  margin-top:30px;
+  margin-bottom:0px;
+}
+
+h4 {
+  font: 16px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+h6 {
+  font: 15px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  margin-top:20px;
+  margin-bottom:-5px;
+}
+
+.small pre {
+  background-color:rgba(255,255,255,0.18);
+  padding-left:12px;
+  margin-left:0px;
+  margin-top:12px;
+  margin-bottom:12px;
+}
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* cookie example */
+
+#cookieExample {
+}
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* park example */
+
+#parkExample {
+	position:relative;
+	font: 14px "Times New Roman", "Times", serif;
+	line-height: 1.4;
+	color: #111;
+	margin-left:0px;
+	width:604px;
+}
+
+#parkExample h5 {
+	font: 16px "Times New Roman", "Times", serif;
+	font-weight: bold;
+	line-height: 1.4;
+	color: #111;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+#parkExample h6 {
+	font: 14px "Times New Roman", "Times", serif;
+	font-weight: normal;
+	font-style: italic;
+	line-height: 1.4;
+	color: #111;
+    margin-top:13px;
+    margin-bottom:-5px;
+}
+
+#parkExample p {
+    margin-top:12px;
+    margin-bottom:12px;
+}
+
+#parkExample .TKAdjustableNumber {
+}
+
+#parkExample .TKAdjustableNumberHover {
+}
+
+#parkExample .TKToggle {
+}
+
+#parkExample .TKToggle:hover {
+}
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* filter example */
+
+#filterExample {
+	position:relative;
+	font: 13px "Times New Roman", "Times", serif;
+	color: #111;
+	padding-left:20px;
+	margin-left:0px;
+	border: 1px solid #aaa;
+	margin-top:20px;
+	margin-bottom:20px;
+	width:598px;
+	-webkit-box-shadow:0px 4px 8px rgba(0,0,0,0.4);
+	-moz-box-shadow:0px 4px 8px rgba(0,0,0,0.4);
+	box-shadow:0px 4px 8px rgba(0,0,0,0.4);
+}
+
+#filterExample p {
+	margin-top:15px;
+	margin-bottom:15px;
+}
+
+#filterExample i {
+	font: 13px "Times New Roman", "Times", serif;
+	font-style: italic;
+}
+
+.filterSidebar {
+	position:absolute;
+	left:420px;
+	width:170px;
+	font-size:12px;
+	color:#aaa;
+}
+
+.filterIndent {
+	position:relative;
+	margin-left: 40px;
+	margin-bottom:25px;
+}
+
+.filterDynamicLabel {
+	position:absolute;
+	width:40px;
+	height:14px;
+	font: 11px "Times New Roman", "Times", serif;
+	color: #00f;
+	background-color:rgba(200,0,0,0.3);
+	background-color:#fff;
+	text-align:center;
+	display:none;
+}
+
+.filterDynamicCoef {
+	position:absolute;
+	font: 13px "Times New Roman", "Times", serif;
+	color: #00f;
+	background-color:rgba(200,0,0,0.3);
+	background-color:#fff;
+	text-align:left;
+	display:none;
+}
+
+.v_stepPlot {
+	position:absolute;
+	display:none;
+}
+
+.v_timePlot {
+	position:absolute;
+	display:none;
+}
+
+.v_polePlot {
+	position:absolute;
+	display:none;
+}
+
+.v_audioPlayer {
+	width:1px;
+	height:1px;
+	margin:0;
+	padding:0;
+}
+
+.filterFreqPlot canvas {
+	position:relative;
+	width:256px;
+	height:128px;
+	border-left:1px solid #222;
+	border-bottom:1px solid #222;
+}
+
+.filterUnstable {
+	position:absolute;
+	left:13px;
+	top:40px;
+	color:#f00;
+}
+
+.filterParams {
+	position:absolute;
+	color: #00f;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 6px;
+	padding-right: 6px;
+	pointer-events:none;
+}
+
+.c_filterKnobHelp {
+	position:absolute;
+	display:none;
+	left:0px;
+	top:-13px;
+	color: #b0b0b0;
+	font: 11px "Times New Roman", "Times", serif;
+	font-style: italic;
+	pointer-events:none;
+}
+
+#filterAudioSwitch {
+	background-image:url(Media/FilterRockOff.png);
+	width:166px;
+	height:34px;
+	margin-left:30px;
+	margin-right:24px;
+	margin-top:6px;
+	cursor:pointer;
+	float:left;
+}
+
+.cursorDrag {
+	cursor: pointer;
+	cursor: move;
+}
+
