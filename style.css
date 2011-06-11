@@ -60,19 +60,23 @@ body {
   top: 53px;
 }
 
-#header #menu {
+#header .menu {
   position: absolute;
   left: 400px;
   top: 50px;
 }
 
-#header #menu a {
+.menu {
+  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+}
+
+.menu a {
   text-transform: uppercase;
   text-decoration: none;
   color: #fff;
 }
 
-#header #menu a:hover {
+.menu a:hover {
   color: #fad595;
   text-decoration: underline;
 }
@@ -82,7 +86,8 @@ body {
   margin-left:9px;
   margin-right:9px;
   width:800px;
-  height:78px;
+  height:40px;
+  position:relative;
 }
 
 #footerShadow {
@@ -90,6 +95,12 @@ body {
   background-image: url(Images/FooterTop.png);
   width:800px;
   height:36px;
+}
+
+#footer .menu {
+  position: absolute;
+  left: 400px;
+  top: 12px;
 }
 
 #body {
@@ -163,6 +174,10 @@ a:hover {
 
 ul {
   list-style-type: none;
+}
+
+li {
+  margin-top:2px;
 }
 
 h2 {

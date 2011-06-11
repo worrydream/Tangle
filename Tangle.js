@@ -23,7 +23,7 @@
 //
 //
 
-Tangle = function (rootElement, modelClass) {
+var Tangle = this.Tangle = function (rootElement, modelClass) {
 
     var tangle = this;
     tangle.element = rootElement;
@@ -32,8 +32,9 @@ Tangle = function (rootElement, modelClass) {
     tangle.setValue = setValue;
     tangle.setValues = setValues;
 
-    var model;
-    var settersByVariableName = {};
+    var _model;
+    var _settersByVariableName = {};
+    var _varargConstructorsByArgCount = [];
 
 
     //----------------------------------------------------------
@@ -55,10 +56,10 @@ Tangle = function (rootElement, modelClass) {
         
         // build a list of elements with class or data-var attributes
         
-		for (var i = 0, length = elements.length; i < length; i++) {
+        for (var i = 0, length = elements.length; i < length; i++) {
             var element = elements[i];
             if (element.getAttribute("class") || element.getAttribute("data-var")) {
-            	interestingElements.push(element);
+                interestingElements.push(element);
             }
         }
 
@@ -109,17 +110,35 @@ Tangle = function (rootElement, modelClass) {
             var args = [ element, tangle ];
             if (varNames) { args = args.concat(varNames); }
             
-            var View = function () { };
-            View.prototype = clas;
-            
-            var view = new View();  // todo mootools class
-            if (view.initialize) { view.initialize.apply(view,args); }
+            var view = constructClass(clas, args);
             
             if (!views) { views = []; }
             views.push(view);
         }
         
         return views;
+    }
+    
+    function constructClass(clas, args) {
+        if (typeof clas !== "function") {  // class is prototype object
+            var View = function () { };
+            View.prototype = clas;
+            var view = new View();
+            if (view.initialize) { view.initialize.apply(view,args); }
+            return view;
+        }
+        else {  // class is constructor function, which we need to "new" with varargs (but no built-in way to do so)
+            var ctor = _varargConstructorsByArgCount[args.length];
+            if (!ctor) {
+                var ctorArgs = [];
+                for (var i = 0; i < args.length; i++) { ctorArgs.push("args[" + i + "]"); }
+                var ctorString = "(function (clas,args) { return new clas(" + ctorArgs.join(",") + "); })";
+                console.log(ctorString);
+                ctor = eval(ctorString);
+                _varargConstructorsByArgCount[args.length] = ctor;
+            }
+            return ctor(clas,args);
+        }
     }
     
 
@@ -137,9 +156,9 @@ Tangle = function (rootElement, modelClass) {
     }
     
     function getSprintfFormatter(formatAttribute) {
-    	if (!sprintf || !formatAttribute.test(/\%/)) { return null; }
-    	var formatter = function (value) { return sprintf(formatAttribute, value); };
-    	return formatter;
+        if (!sprintf || !formatAttribute.test(/\%/)) { return null; }
+        var formatter = function (value) { return sprintf(formatAttribute, value); };
+        return formatter;
     }
 
     
@@ -161,7 +180,7 @@ Tangle = function (rootElement, modelClass) {
         }
 
         for (var i = 0; i < varNames.length; i++) {
-            addSetterForVariable(varNames[i], setter);  //  todo, how to avoid being called 3 times
+            addSetterForVariable(varNames[i], setter);
         }
     }
 
@@ -178,12 +197,12 @@ Tangle = function (rootElement, modelClass) {
     }
     
     function addSetterForVariable(varName, setter) {
-        if (!settersByVariableName[varName]) { settersByVariableName[varName] = []; }
-        settersByVariableName[varName].push(setter);
+        if (!_settersByVariableName[varName]) { _settersByVariableName[varName] = []; }
+        _settersByVariableName[varName].push(setter);
     }
 
     function applySettersForVariable(varName, value) {
-        var setters = settersByVariableName[varName];
+        var setters = _settersByVariableName[varName];
         if (!setters) { return; }
         for (var i = 0, length = setters.length; i < length; i++) {
             setters[i](value);
@@ -196,7 +215,7 @@ Tangle = function (rootElement, modelClass) {
     // variables
 
     function getValue(varName) {
-        var value = model[varName];
+        var value = _model[varName];
         if (value === undefined) { log("Tangle: unknown variable: " + varName);  return 0; }
         return value;
     }
@@ -212,11 +231,11 @@ Tangle = function (rootElement, modelClass) {
 
         for (var varName in obj) {
             var value = obj[varName];
-            var oldValue = model[varName];
+            var oldValue = _model[varName];
             if (oldValue === undefined) { log("Tangle: setting unknown variable: " + varName);  return; }
             if (oldValue === value) { continue; }  // don't update if new value is the same
 
-            model[varName] = value;
+            _model[varName] = value;
             applySettersForVariable(varName, value);
             didChangeValue = true;
         }
@@ -230,16 +249,16 @@ Tangle = function (rootElement, modelClass) {
     // model
 
     function setModel(modelClass) {
-        var ModelClass = function () { };  // todo mootools class
+        var ModelClass = function () { };
         ModelClass.prototype = modelClass;
-        
-        model = new ModelClass();
+        _model = new ModelClass;
+
         updateModel(true);  // initialize and update
     }
     
     function updateModel(shouldInitialize) {
         var ShadowModel = function () {};
-        ShadowModel.prototype = model;
+        ShadowModel.prototype = _model;
         var shadowModel = new ShadowModel;
         
         if (shouldInitialize) { shadowModel.initialize(); }
@@ -247,15 +266,15 @@ Tangle = function (rootElement, modelClass) {
         
         var changedVarNames = [];
         for (var varName in shadowModel) {
-            if (model[varName] !== shadowModel[varName]) {
-                model[varName] = shadowModel[varName];
+            if (_model[varName] !== shadowModel[varName]) {
+                _model[varName] = shadowModel[varName];
                 changedVarNames.push(varName);
             }
         }
         
         for (var i = 0, length = changedVarNames.length; i < length; i++) {
             var varName = changedVarNames[i];
-            applySettersForVariable(varName, model[varName]);
+            applySettersForVariable(varName, _model[varName]);
         }
     }
 

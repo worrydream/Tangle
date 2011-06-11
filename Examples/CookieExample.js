@@ -13,5 +13,4 @@ window.addEvent('domready', function () {
         update: function () { this.calories = this.cookies * 50; },
     });
 
-
 });

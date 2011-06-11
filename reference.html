@@ -5,7 +5,7 @@
     <base target="_top">
 
     <title>Tangle: API Reference</title>
-	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
 
@@ -23,10 +23,10 @@
 <h1><a href="./">tangle</a></h1>
 <h3>explorable explanations made easy</h3>
 
-<div id="menu">
-    <a id="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a id="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a id="menuDownload" href="download.html">Download</a>
+<div class="menu">
+    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a class="menuDownload" href="download.html">Download</a>
 </div>
 
 </div> <!-- header -->
@@ -155,23 +155,13 @@ tangle.<b>setModel</b>({
 
 <p>The model should be an object with <code>initialize</code> and <code>update</code> methods.  When the model is set, the <code><b>initialize</b></code> method is called to set the initial values of variables, and the <code><b>update</b></code> method is called to calculate variables derived from those.  When a variable is changed subsequently via <code>tangle.setValue</code>, the <code><b>update</b></code> method will be called again to recalculate derived variables.</p>
 
-<p>You may also define any methods or variables that you want to use internally:</p>
+<p>You may also define any methods that you want to use internally:</p>
 
 <p><code><pre>
 {  initialize: function () { this.cookies = 4; },
    update:     function () { this.calories = this.cookies * this.getCalPerCookie(); },
    getCalPerCookie: function () { ... }
 }
-</pre></code></p>
-
-<p>If you provide a function instead of an object, Tangle will call it as a constructor.  This allows you to use classes from MooTools or some other framework, and take advantage of inheritance and other features of such frameworks:</p>
-
-<p><code><pre>
-tangle.setModel(new Class({  // assuming we're using MooTools
-    Extends: MyBaseModel,
-    initialize: function () { this.parent.initialize(); ... },
-    update:     function () { ... }
-});
 </pre></code></p>
 
 
@@ -268,6 +258,23 @@ Tangle.classes.StretchyBar = {
 </pre></code></p>
 
 
+<h6>other methods</h6>
+
+<p>You may also define any methods that you want to use internally.</p>
+
+<p><code><pre>
+Tangle.classes.StretchyBar = {
+    update: function (element, value) {
+        var width = value * this.getStretchiness();
+        element.style.width = "" + width + "px";
+    },
+    getStretchiness: function () {
+        ...
+    }
+};
+</pre></code></p>
+
+
 <h6>CSS</h6>
 
 <p>Because these are CSS classes as well as Tangle classes, you can often specify the element's style in a CSS file, and only deal with behavior in JavaScript.</p>
@@ -283,12 +290,15 @@ Tangle.classes.StretchyBar = {
 
 <h6>framework classes</h6>
 
-<p>If you provide a function instead of an object, Tangle will call it as a constructor.  This allows you to use classes from MooTools or some other framework, and take advantage of inheritance and other features of such frameworks:</p>
+<p>If <code>Tangle.classes.MyClass</code> is a function instead of an object, Tangle will call it as a constructor, instead of directly invoking an <code>initialize</code> method.  This allows you to use classes from MooTools or some other framework, and take advantage of inheritance and other features.</p>
 
 <p><code><pre>
 Tangle.classes.MyClass = new Class({  // assuming we're using MooTools
     Extends: MyBaseClass,
-    ...
+    initialize: function (element, tangle, variable) {
+       this.parent(element, tangle, variable);
+       ...
+    }
 });
 </pre></code></p>
 
@@ -347,7 +357,11 @@ Tangle.formats.percent = function (value) {   // formats 0.42 as "42%"
 <div id="footer">
 <div id="footerShadow"></div>
 
-<p>Next: See more examples.</p>
+<div class="menu">
+    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a class="menuDownload" href="download.html">Download</a>
+</div>
 
 </div> <!-- footer -->
 
