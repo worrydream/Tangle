@@ -88,6 +88,8 @@ body {
   width:800px;
   height:40px;
   position:relative;
+  color:#fff;
+  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
 }
 
 #footerShadow {
@@ -101,6 +103,18 @@ body {
   position: absolute;
   left: 400px;
   top: 12px;
+}
+
+#footer .author {
+  font: 12px "Lato", "Helvetica", "Arial", sans-serif;
+  color: #aa8d5a;
+  position:absolute;
+  left:45px;
+  top:12px;
+}
+
+#footer .author a {
+  color: inherit;
 }
 
 #body {
@@ -211,6 +225,7 @@ h6 {
 /* cookie example */
 
 #cookieExample {
+	position:relative;
 }
 
 

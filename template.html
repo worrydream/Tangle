@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tangle document</title>
+
+    <!-- Tangle -->
+    <script type="text/javascript" src="Tangle.js"></script>
+
+    <!-- TangleKit -->
+    <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
+    <script type="text/javascript" src="TangleKit/mootools.js"></script>
+    <script type="text/javascript" src="TangleKit/sprintf.js"></script>
+    <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
+    <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
+
+    <!-- example -->
+    <script type="text/javascript">
+
+        function setUpExample () {
+
+            var element = document.getElementById("example");
+
+            var tangle = new Tangle(element, {
+
+                initialize: function () {
+                    this.cookies = 4;
+                },
+
+                update: function () {
+                    this.calories = this.cookies * 50;
+                }
+
+            });
+        }
+
+    </script>
+</head>
+
+<body onload="setUpExample();">
+
+    <p>This is a simple reactive document.</p>
+
+    <p id="example">
+        When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you
+        will consume <span data-var="calories"></span> calories.
+    </p>
+
+</body>
+</html>

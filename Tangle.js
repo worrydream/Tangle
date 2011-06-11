@@ -5,11 +5,6 @@
 //  Created by Bret Victor on 5/2/10.
 //  (c) 2011 Bret Victor.  MIT open-source license.
 //
-//  ------ UI components ------
-//
-//  Tangle.formats.myFormat = function (value) { ... }
-//  Tangle.classes.myClass = { ... }
-//
 //  ------ model ------
 //
 //  var tangle = new Tangle(rootElement, model);
@@ -21,6 +16,13 @@
 //  tangle.setValue(variableName, value);
 //  tangle.setValues({ variableName:value, variableName:value });
 //
+//  ------ UI components ------
+//
+//  Tangle.classes.myClass = {
+//     initialize: function (element, tangle, variable) { ... },
+//     update: function (element, value) { ... }
+//  };
+//  Tangle.formats.myFormat = function (value) { return "..."; };
 //
 
 var Tangle = this.Tangle = function (rootElement, modelClass) {
@@ -133,9 +135,8 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
                 var ctorArgs = [];
                 for (var i = 0; i < args.length; i++) { ctorArgs.push("args[" + i + "]"); }
                 var ctorString = "(function (clas,args) { return new clas(" + ctorArgs.join(",") + "); })";
-                console.log(ctorString);
-                ctor = eval(ctorString);
-                _varargConstructorsByArgCount[args.length] = ctor;
+                ctor = eval(ctorString);   // nasty
+                _varargConstructorsByArgCount[args.length] = ctor;   // but cached
             }
             return ctor(clas,args);
         }
@@ -150,7 +151,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         var formatter = Tangle.formats[formatAttribute] || getSprintfFormatter(formatAttribute);
         if (!formatter) { 
             log("Tangle: unknown format: " + formatAttribute);
-            formatter = function () { return "" };
+            formatter = Tangle.formats["default"];
         }
         return formatter;
     }
@@ -180,7 +181,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         }
 
         for (var i = 0; i < varNames.length; i++) {
-            addSetterForVariable(varNames[i], setter);
+            addSetterForVariable(varNames[i], setter);  // TODO: if 2 varNames, and both variables change, this is called twice
         }
     }
 
