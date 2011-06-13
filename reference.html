@@ -3,8 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <base target="_top">
-
     <title>Tangle: API Reference</title>
+
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
@@ -24,9 +24,10 @@
 <h3>explorable explanations made easy</h3>
 
 <div class="menu">
-    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuDownload" href="download.html">Download</a>
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
 </div> <!-- header -->
@@ -44,9 +45,12 @@
 <li><a href="#api">JavaScript API</a></li>
 <li><a href="#classes">Tangle.classes</a></li>
 <li><a href="#formats">Tangle.formats</a></li>
+<li><a href="#kit">TangleKit</a></li>
 </ul>
 
 
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- HTML attributes -->
 
 <h2 id="html">HTML attributes</h2>
 
@@ -67,7 +71,7 @@ I want &lt;span <b>class="TKAdjustableNumber"</b> data-var="cookies"&gt;&lt;/spa
 
 <p>See <a href="#classes">Tangle.classes</a> for details on how to write and plug in a class.</p>
 
-<p>An element can have any number of classes, like so:&nbsp;  <code>&lt;span <b>class="MyClass MyOtherClass" data-var="cookies"&gt;</b></code>.&nbsp;  Any of the classes can be defined in CSS, JavaScript, both, or neither.</p>
+<p>An element can have any number of classes, like so:&nbsp;  <code>&lt;span <b>class="MyClass MyOtherClass" data-var="cookies"&gt;</b></code>.&nbsp;  Any of the classes can be defined in CSS, JavaScript, both, or neither.  You might use one class for the visual presentation of a variable, and another to provide interactive manipulation.</p>
 
 
 <h4 id="data-var">data-var</h4>
@@ -107,6 +111,9 @@ That cookie costs &lt;span data-var="cost" <b>data-format="$%.2f"</b>&gt;&lt;/sp
 
 <p>For details, see the documentation for the individual class.</p>
 
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- JavaScript API -->
 
 <p style="text-align:center; margin-top:40px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
 
@@ -206,6 +213,8 @@ tangle.<b>setValues</b>({ cookies:17, cupcakes:12 });
 <p>Sets values for multiple variables at once.</p>
 
 
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Tangle.classes -->
 
 <p style="text-align:center; margin-top:40px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
 
@@ -290,7 +299,7 @@ Tangle.classes.StretchyBar = {
 
 <h6>framework classes</h6>
 
-<p>If <code>Tangle.classes.MyClass</code> is a function instead of an object, Tangle will call it as a constructor, instead of directly invoking an <code>initialize</code> method.  This allows you to use classes from MooTools or some other framework, and take advantage of inheritance and other features.</p>
+<p>If <code>Tangle.classes.MyClass</code> is a function instead of an object, Tangle will call it as a constructor, instead of directly invoking an <code>initialize</code> method.  So, if you're using a framework such as MooTools that has its own notion of what a "class" is, you can use its classes directly, and take advantage of inheritance and other features.</p>
 
 <p><code><pre>
 Tangle.classes.MyClass = new Class({  // assuming we're using MooTools
@@ -323,6 +332,9 @@ Tangle.classes.MyClass = {
 <p>This is useful for two-dimensional controls that adjust two variables at once, or views that display multiple variables.</p>
 
 
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- Tangle.formats -->
+
 <p style="text-align:center; margin-top:40px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
 
 <h2 id="formats">Tangle.formats</h2>
@@ -348,6 +360,18 @@ Tangle.formats.percent = function (value) {   // formats 0.42 as "42%"
 <p>You can often use printf-style formats instead, but <code>Tangle.formats</code> is available for your custom formatting needs.  To use printf-style formats, you must include a sprintf library, such as the one that is provided with TangleKit.</p>
 
 
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- TangleKit -->
+
+<p style="text-align:center; margin-top:40px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
+
+<h2 id="kit">TangleKit</h2>
+
+<p>TangleKit is an optional collection of Tangle classes and formats, for adjusting variables and visualizing values.  You can grab whichever components you want, use them, extend them, modify them, or just learn from them and make your own.</p>
+
+<p>TangleKit is currently pretty rudimentary, and not yet documented here.  You can look through <a href="TangleKit/TangleKit.js">TangleKit.js</a> for what's currently available.</p>
+
+
 </div> <!-- body -->
 
 
@@ -360,9 +384,10 @@ Tangle.formats.percent = function (value) {   // formats 0.42 as "42%"
 <div class="author">by <a href="http://worrydream.com/">Bret Victor</a></div>
 
 <div class="menu">
-    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuDownload" href="download.html">Download</a>
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
 </div> <!-- footer -->

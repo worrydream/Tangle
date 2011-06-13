@@ -7,7 +7,7 @@
     <!-- Tangle -->
     <script type="text/javascript" src="Tangle.js"></script>
 
-    <!-- TangleKit -->
+    <!-- TangleKit (optional) -->
     <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
     <script type="text/javascript" src="TangleKit/mootools.js"></script>
     <script type="text/javascript" src="TangleKit/sprintf.js"></script>
@@ -17,27 +17,25 @@
     <!-- example -->
     <script type="text/javascript">
 
-        function setUpExample () {
+        function setUpTangle () {
 
             var element = document.getElementById("example");
 
             var tangle = new Tangle(element, {
-
                 initialize: function () {
                     this.cookies = 4;
+                    this.caloriesPerCookie = 50;
                 },
-
                 update: function () {
-                    this.calories = this.cookies * 50;
+                    this.calories = this.cookies * this.caloriesPerCookie;
                 }
-
             });
         }
 
     </script>
 </head>
 
-<body onload="setUpExample();">
+<body onload="setUpTangle();">
 
     <p>This is a simple reactive document.</p>
 

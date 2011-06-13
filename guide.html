@@ -9,6 +9,19 @@
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
 
+    <!-- Tangle -->
+    <script type="text/javascript" src="Tangle.js"></script>
+
+    <!-- TangleKit -->
+    <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
+    <script type="text/javascript" src="TangleKit/mootools.js"></script>
+    <script type="text/javascript" src="TangleKit/sprintf.js"></script>
+    <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
+    <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
+
+    <!-- examples -->
+    <script type="text/javascript" src="Examples/CookieExample.js"></script>
+
 </head>
 
 <body>
@@ -24,9 +37,10 @@
 <h3>explorable explanations made easy</h3>
 
 <div class="menu">
-    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuDownload" href="download.html">Download</a>
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
 </div> <!-- header -->
@@ -39,6 +53,90 @@
 
 
 <h2>Getting Started</h2>
+
+<p>Tangle lets you write documents that change.</p>
+
+<p>Let's say you're writing an article about dieting, and want to discuss the calorie content of various foods.  You might write the following sentences.</p>
+
+<div class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat 3 cookies, you consume <b>150 calories</b>.  That's 7% of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>That's a true statement, but it only applies directly to those few readers who eat 3 cookies a day.  Most of your readers eat more or less.  What if the reader could adjust the statement to see information about their own situation?  What if readers could explore alternative scenarios as well?</p>
+
+<div id="cookieExample" class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+		<p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <b data-var="calories"></b> calories.  That's <span data-var="dailyPercent">%</span> of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>How do we make this?</p>
+
+
+<h2>Variables</h2>
+
+<p>We start by identifying the <strong>variables</strong> &mdash; those parts of the statement that need to change.  In this case, there are three varying numbers in the statement, so we need three variables.</p>
+
+<div class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat <strong>3 cookies</strong>, you consume <strong>150 calories</strong>.  That's <strong>7%</strong> of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>We'll call these variables <strong>cookies</strong>, <strong>calories</strong>, and <strong>dailyPercent</strong> respectively.</p>
+
+
+<h2>HTML</h2>
+
+<p>Now, let's look at the HTML for the statement.</p>
+
+<p><code><pre>
+&lt;p&gt;When you eat 3 cookies, you consume &lt;b&gt;150 calories&lt;/b&gt;.
+   That's 7% of your recommended daily calories.&lt;/p&gt;
+</pre></code></p>
+
+<p>Let's start with the "150 calories" part.  Notice that it's inside <code>&lt;b&gt;</code> tags, to make it bold.  We'll make two simple changes:</p>
+
+<p><code><pre>
+&lt;p&gt;When you eat 3 cookies, you consume &lt;b <strong>data-var="calories"</strong>&gt; calories&lt;/b&gt;.
+   That's 7% of your recommended daily calories.&lt;/p&gt;
+</pre></code></p>
+
+<p>First, we added the <code>data-var="calories"</code> attribute to the &lt;b&gt; tag.  This tells Tangle to insert the value of the "calories" variable inside the tag.  So, if the calories variable were 500, it would appear as "500 calories".</p>
+
+<p>Second, we removed the "150" from inside the tag, because Tangle is going to insert the correct number itself.</p>
+
+<p>Now, let's look at the "7%" part.  It's not inside a tag, so we need to put it inside one.  The <code>&lt;span&gt;</code> tag is typically used for this purpose.  Unlike <code>&lt;b&gt;</code>, it has no intrinsic meaning of its own &mdash; it's simply a generic container that we can attach style and variable information to.</p>
+
+<p><code><pre>
+&lt;p&gt;When you eat 3 cookies, you consume &lt;b data-var="calories"&gt; calories&lt;/b&gt;.
+   That's <strong>&lt;span data-var="dailyPercent"&gt;</strong>%<strong>&lt;/span&gt;</strong> of your recommended daily calories.&lt;/p&gt;
+</pre></code></p>
+
+<p>Tangle will insert the value of the "dailyPercent" variable at the start of the span.</p>
+
+<p>Finally, we'll look at the "3 cookies" part.  This part isn't just dynamic &mdash; it's interactive.  We want the reader to be able to adjust the variable by dragging on the number.  For this, we use a "class".  A Tangle class can describe how the reader interacts with an HTML element, or how a variable should be displayed.</p>
+
+<p>We'll use the class "<code>TKAdjustableNumber</code>", which comes with TangleKit.  (The "TK" prefix refers to "TangleKit".)  TangleKit is a collection of basic classes for you to use.  Once you start tangling more heavily, you might want to start making your own classes.</p>
+
+<p><code><pre>
+&lt;p&gt;When you eat <strong>&lt;span class="TKAdjustableNumber" data-var="cookies"&gt;</strong> cookies<strong>&lt;/span&gt;</strong>,
+   you consume &lt;b data-var="calories"&gt; calories&lt;/b&gt;. That's 
+   &lt;span data-var="dailyPercent"&gt;%&lt;/span&gt; of your recommended daily calories.&lt;/p&gt;
+</pre></code></p>
+
+<p>That's all we need to do with the HTML.  Next, we'll tell Tangle how to calculate those variables.</p>
+
+
+<h2>JavaScript</h2>
 
 
 
@@ -54,9 +152,10 @@
 <div class="author">by <a href="http://worrydream.com/">Bret Victor</a></div>
 
 <div class="menu">
-    <a class="menuGuide" href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuReference" href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a class="menuDownload" href="download.html">Download</a>
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
 </div> <!-- footer -->

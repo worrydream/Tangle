@@ -1,5 +1,9 @@
 * { margin: 0; padding: 0; }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   background: #eee0c7;
   font: 14px "Lato", "Helvetica", "Arial", sans-serif;
@@ -62,7 +66,7 @@ body {
 
 #header .menu {
   position: absolute;
-  left: 400px;
+  left: 320px;
   top: 50px;
 }
 
@@ -101,7 +105,7 @@ body {
 
 #footer .menu {
   position: absolute;
-  left: 400px;
+  left: 320px;
   top: 12px;
 }
 
@@ -210,6 +214,11 @@ h6 {
   font: 15px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
   margin-top:20px;
   margin-bottom:-5px;
+}
+
+strong {
+  font-weight: bold;
+  color: #e00;
 }
 
 .small pre {

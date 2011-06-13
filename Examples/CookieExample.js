@@ -9,8 +9,15 @@
 window.addEvent('domready', function () {
 
     new Tangle(document.getElementById("cookieExample"), {
-        initialize: function () { this.cookies = 4; },
-        update: function () { this.calories = this.cookies * 50; },
+        initialize: function () {
+            this.cookies = 3;
+            this.caloriesPerCookie = 50;
+            this.caloriesPerDay = 2100;
+        },
+        update: function () {
+            this.calories = this.cookies * this.caloriesPerCookie;
+            this.dailyPercent = Math.round(100 * this.calories / this.caloriesPerDay);
+        }
     });
 
 });
