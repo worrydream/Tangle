@@ -62,14 +62,16 @@ body {
   top: 54px;
 }
 
-#header .menu {
+.menu {
   position: absolute;
-  left: 310px;
-  top: 56px;
+  left: 200px;
+  width: 556px;
+  font: 12px "Insolent", "Helvetica", sans-serif;
+  text-align:right;
 }
 
-.menu {
-  font: 12px "Insolent", "Helvetica", sans-serif;
+#header .menu {
+  top: 56px;
 }
 
 .menu a {
@@ -102,8 +104,6 @@ body {
 }
 
 #footer .menu {
-  position: absolute;
-  left: 310px;
   top: 15px;
 }
 
