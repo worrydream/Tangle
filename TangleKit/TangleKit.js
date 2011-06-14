@@ -19,8 +19,8 @@
 
 Tangle.classes.TKIf = {
     
-    initialize: function (element, tangle, variable) {
-        this.isInverted = !!element.getAttribute("invert");
+    initialize: function (element, options, tangle, variable) {
+        this.isInverted = !!options.invert;
     },
     
     update: function (element, value) {
@@ -69,7 +69,7 @@ Tangle.classes.TKPlusMinus = {
 
 Tangle.classes.TKToggle = {
 
-    initialize: function (element, tangle, variable) {
+    initialize: function (element, options, tangle, variable) {
         element.addEvent("click", function (event) {
             var isActive = tangle.getValue(variable);
             tangle.setValue(variable, isActive ? 0 : 1);
@@ -88,14 +88,14 @@ var isAnyAdjustableNumberDragging = false;  // hack for dragging one value over 
 
 Tangle.classes.TKAdjustableNumber = {
 
-    initialize: function (element, tangle, variable) {
+    initialize: function (element, options, tangle, variable) {
         this.element = element;
         this.tangle = tangle;
         this.variable = variable;
 
-        this.min = (element.getAttribute("data-min") !== null) ? parseFloat(element.getAttribute("data-min")) : 1;
-        this.max = (element.getAttribute("data-max") !== null) ? parseFloat(element.getAttribute("data-max")) : 10;
-        this.step = (element.getAttribute("data-step") !== null) ? parseFloat(element.getAttribute("data-step")) : 1;
+        this.min = (options.min !== undefined) ? parseFloat(options.min) : 1;
+        this.max = (options.max !== undefined) ? parseFloat(options.max) : 10;
+        this.step = (options.step !== undefined) ? parseFloat(options.step) : 1;
         
         this.initializeHover();
         this.initializeHelp();

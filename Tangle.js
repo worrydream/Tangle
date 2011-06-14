@@ -96,8 +96,8 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             
             if (!didAddSetter) {
                 var formatAttribute = element.getAttribute("data-format");
-                var formatter = getFormatter(formatAttribute || "default");
-                addDefaultSettersForElement(element, varNames, formatter);
+                var formatter = getFormatterForFormat(formatAttribute, varNames);
+                addFormatSettersForElement(element, varNames, formatter);
             }
         }
     }
@@ -109,7 +109,8 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             var clas = Tangle.classes[classNames[i]];
             if (!clas) { continue; }
             
-            var args = [ element, tangle ];
+            var options = getOptionsForElement(element);
+            var args = [ element, options, tangle ];
             if (varNames) { args = args.concat(varNames); }
             
             var view = constructClass(clas, args);
@@ -119,6 +120,23 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         }
         
         return views;
+    }
+    
+    function getOptionsForElement(element) {
+        var options = {};
+
+        var attributes = element.attributes;
+        var regexp = /^data-[\w\-]+$/;
+
+        for (var i = 0, length = attributes.length; i < length; i++) {
+            var attr = attributes[i];
+            var attrName = attr.name;
+            if (!attrName || !regexp.test(attrName)) { continue; }
+            
+            options[attrName.substr(5)] = attr.value;
+        }
+         
+        return options;   
     }
     
     function constructClass(clas, args) {
@@ -147,18 +165,62 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     //
     // formatters
 
-    function getFormatter(formatAttribute) {
-        var formatter = Tangle.formats[formatAttribute] || getSprintfFormatter(formatAttribute);
-        if (!formatter) { 
-            log("Tangle: unknown format: " + formatAttribute);
-            formatter = Tangle.formats["default"];
+    function getFormatterForFormat(formatAttribute, varNames) {
+        if (!formatAttribute) { formatAttribute = "default"; }
+
+        var formatter = getFormatterForCustomFormat(formatAttribute, varNames);
+        if (!formatter) { formatter = getFormatterForSprintfFormat(formatAttribute, varNames); }
+        if (!formatter) { log("Tangle: unknown format: " + formatAttribute); formatter = getFormatterForFormat(null,varNames); }
+
+        return formatter;
+    }
+        
+    function getFormatterForCustomFormat(formatAttribute, varNames) {
+        var components = formatAttribute.split(" ");
+        var formatName = components[0];
+        if (!formatName) { return null; }
+        
+        var format = Tangle.formats[formatName];
+        if (!format) { return null; }
+        
+        var formatter;
+        var params = components.slice(1);
+        
+        if (varNames.length <= 1 && params.length === 0) {  // one variable, no params
+            formatter = format;
+        }
+        else if (varNames.length <= 1) {  // one variable with params
+            formatter = function (value) {
+                var args = [ value ].concat(params);
+                return format.apply(null, args);
+            };
+        }
+        else {  // multiple variables
+            formatter = function () {
+                var values = getValuesForVariables(varNames);
+                var args = values.concat(params);
+                return format.apply(null, args);
+            };
         }
         return formatter;
     }
     
-    function getSprintfFormatter(formatAttribute) {
+    function getFormatterForSprintfFormat(formatAttribute, varNames) {
         if (!sprintf || !formatAttribute.test(/\%/)) { return null; }
-        var formatter = function (value) { return sprintf(formatAttribute, value); };
+
+        var formatter;
+        if (varNames.length <= 1) {  // one variable
+            formatter = function (value) {
+                return sprintf(formatAttribute, value);
+            };
+        }
+        else {
+            formatter = function (value) {  // multiple variables
+                var values = getValuesForVariables(varNames);
+                var args = [ formatAttribute ].concat(values);
+                return sprintf.apply(null, args);
+            };
+        }
         return formatter;
     }
 
@@ -166,16 +228,16 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     //----------------------------------------------------------
     //
     // setters
-
+    
     function addViewSettersForElement(element, varNames, view) {
         var setter;
-        if (varNames.length === 1) {
+        if (varNames.length <= 1) {
             setter = function (value) { view.update(element, value); };
         }
         else {
             setter = function () {
-                var args = [ element ];
-                for (var i = 0, length = varNames.length; i < length; i++) { args.push(getValue(varNames[i])); }
+                var values = getValuesForVariables(varNames);
+                var args = [ element ].concat(values);
                 view.update.apply(view,args);
             };
         }
@@ -185,7 +247,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         }
     }
 
-    function addDefaultSettersForElement(element, varNames, formatter) {
+    function addFormatSettersForElement(element, varNames, formatter) {
         var span = null;
         var setter = function (value) {
             if (!span) { 
@@ -194,7 +256,10 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             }
             span.innerHTML = formatter(value);
         };
-        addSetterForVariable(varNames[0], setter);
+
+        for (var i = 0; i < varNames.length; i++) {
+            addSetterForVariable(varNames[i], setter);
+        }
     }
     
     function addSetterForVariable(varName, setter) {
@@ -244,6 +309,14 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         if (didChangeValue) { updateModel(); }
     }
     
+    function getValuesForVariables(varNames) {
+        var values = [];
+        for (var i = 0, length = varNames.length; i < length; i++) {
+            values.push(getValue(varNames[i]));
+        }
+        return values;
+    }
+
                     
     //----------------------------------------------------------
     //
@@ -267,10 +340,11 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         
         var changedVarNames = [];
         for (var varName in shadowModel) {
-            if (_model[varName] !== shadowModel[varName]) {
-                _model[varName] = shadowModel[varName];
-                changedVarNames.push(varName);
-            }
+            if (!shadowModel.hasOwnProperty(varName)) { continue; }
+            if (_model[varName] === shadowModel[varName]) { continue; }
+            
+            _model[varName] = shadowModel[varName];
+            changedVarNames.push(varName);
         }
         
         for (var i = 0, length = changedVarNames.length; i < length; i++) {

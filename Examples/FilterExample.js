@@ -151,7 +151,7 @@ function chamberlinStepResponse (kf,kq,N) {
 
 Tangle.classes.FilterKnob = {
 
-    initialize: function (el, tangle, xParameter, yParameter) {
+    initialize: function (el, options, tangle, xParameter, yParameter) {
         var index = xParameter.substr(xParameter.length - 1);
         var xBounds = { min:20, max:20000 };
         var yBounds = { min:0.01, max:10 };
@@ -287,7 +287,7 @@ Tangle.classes.FilterKnob = {
 
 Tangle.classes.FilterFreqPlot = {
 
-    initialize: function (el, tangle) {
+    initialize: function (el, options, tangle) {
         this.tangle = tangle;
     },
 
@@ -350,7 +350,7 @@ Tangle.classes.FilterFreqPlot = {
 
 Tangle.classes.FilterTimePlot = {
     
-    initialize: function (el, tangle) {
+    initialize: function (el, options, tangle) {
         this.tangle = tangle;
     },
 
@@ -429,7 +429,7 @@ Tangle.classes.FilterStepPlot = {
 
 Tangle.classes.FilterPolePlot = {
 
-    initialize: function (el, tangle) {
+    initialize: function (el, options, tangle) {
         this.tangle = tangle;
     },
 

@@ -3,9 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <base target="_top">
-
     <title>Tangle: Getting Started</title>
-	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="Fonts/Insolent/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
 
@@ -37,9 +38,9 @@
 <h3>explorable explanations made easy</h3>
 
 <div class="menu">
-    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp;
     <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
@@ -56,7 +57,7 @@
 
 <p>Tangle lets you write documents that change.</p>
 
-<p>Let's say you're writing an article about dieting, and want to discuss the calorie content of various foods.  You might write the following sentences.</p>
+<p>Let's say you're writing an article about dieting, and want to discuss the calorie content of various foods.  You might write the following.</p>
 
 <div class="example">
     <div class="exampleTop"></div>
@@ -71,12 +72,12 @@
 <div id="cookieExample" class="example">
     <div class="exampleTop"></div>
     <div class="exampleCenter">
-		<p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <b data-var="calories"></b> calories.  That's <span data-var="dailyPercent">%</span> of your recommended daily calories.</p>
+        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <b data-var="calories"> calories</b>.  That's <span data-var="dailyPercent" data-format="%.0f">%</span> of your recommended daily calories.</p>
     </div>
     <div class="exampleBottom"></div>
 </div>
 
-<p>How do we make this?</p>
+<p>Let's see how to write this example.</p>
 
 
 <h2>Variables</h2>
@@ -98,45 +99,208 @@
 
 <p>Now, let's look at the HTML for the statement.</p>
 
-<p><code><pre>
+<pre>
 &lt;p&gt;When you eat 3 cookies, you consume &lt;b&gt;150 calories&lt;/b&gt;.
    That's 7% of your recommended daily calories.&lt;/p&gt;
-</pre></code></p>
+</pre>
+
+
+<h6>data-var</h6>
 
 <p>Let's start with the "150 calories" part.  Notice that it's inside <code>&lt;b&gt;</code> tags, to make it bold.  We'll make two simple changes:</p>
 
-<p><code><pre>
+<pre>
 &lt;p&gt;When you eat 3 cookies, you consume &lt;b <strong>data-var="calories"</strong>&gt; calories&lt;/b&gt;.
    That's 7% of your recommended daily calories.&lt;/p&gt;
-</pre></code></p>
+</pre>
 
-<p>First, we added the <code>data-var="calories"</code> attribute to the &lt;b&gt; tag.  This tells Tangle to insert the value of the "calories" variable inside the tag.  So, if the calories variable were 500, it would appear as "500 calories".</p>
+<p>First, we added the <code><b>data-var="calories"</b></code> attribute to the &lt;b&gt; tag.  This tells Tangle to insert the value of the "calories" variable inside the tag.  So, if the calories variable were 500, it would appear as "500 calories".</p>
 
 <p>Second, we removed the "150" from inside the tag, because Tangle is going to insert the correct number itself.</p>
 
+
+<h6>span</h6>
+
 <p>Now, let's look at the "7%" part.  It's not inside a tag, so we need to put it inside one.  The <code>&lt;span&gt;</code> tag is typically used for this purpose.  Unlike <code>&lt;b&gt;</code>, it has no intrinsic meaning of its own &mdash; it's simply a generic container that we can attach style and variable information to.</p>
 
-<p><code><pre>
+<pre>
 &lt;p&gt;When you eat 3 cookies, you consume &lt;b data-var="calories"&gt; calories&lt;/b&gt;.
    That's <strong>&lt;span data-var="dailyPercent"&gt;</strong>%<strong>&lt;/span&gt;</strong> of your recommended daily calories.&lt;/p&gt;
-</pre></code></p>
+</pre>
 
 <p>Tangle will insert the value of the "dailyPercent" variable at the start of the span.</p>
 
-<p>Finally, we'll look at the "3 cookies" part.  This part isn't just dynamic &mdash; it's interactive.  We want the reader to be able to adjust the variable by dragging on the number.  For this, we use a "class".  A Tangle class can describe how the reader interacts with an HTML element, or how a variable should be displayed.</p>
+
+<h6>class</h6>
+
+<p>Now, we'll look at the "3 cookies" part.  This part isn't just dynamic &mdash; it's interactive.  We want the reader to be able to adjust the variable by dragging on the number.  For this, we use a class.  A Tangle class can describe how the reader interacts with an HTML element, or how a variable should be displayed.</p>
 
 <p>We'll use the class "<code>TKAdjustableNumber</code>", which comes with TangleKit.  (The "TK" prefix refers to "TangleKit".)  TangleKit is a collection of basic classes for you to use.  Once you start tangling more heavily, you might want to start making your own classes.</p>
 
-<p><code><pre>
+<pre>
 &lt;p&gt;When you eat <strong>&lt;span class="TKAdjustableNumber" data-var="cookies"&gt;</strong> cookies<strong>&lt;/span&gt;</strong>,
    you consume &lt;b data-var="calories"&gt; calories&lt;/b&gt;. That's 
    &lt;span data-var="dailyPercent"&gt;%&lt;/span&gt; of your recommended daily calories.&lt;/p&gt;
-</pre></code></p>
+</pre>
 
-<p>That's all we need to do with the HTML.  Next, we'll tell Tangle how to calculate those variables.</p>
 
+<h6>id</h6>
+
+<p>Finally, we need to make sure that we're able to find this statement from JavaScript.  The easiest way to do so is to add an <code>id</code> attribute to the tag that contains it.  In this case, our statement is inside a &lt;p&gt; paragraph tag, and we can name it like so:</p>
+
+<pre>
+&lt;p <strong>id="calorieCalculator"</strong>&gt;
+  When you eat &lt;span class="TKAdjustableNumber" data-var="cookies"&gt; cookies&lt;/span&gt;,
+  you consume &lt;b data-var="calories"&gt; calories&lt;/b&gt;. That's 
+  &lt;span data-var="dailyPercent"&gt;%&lt;/span&gt; of your recommended daily calories.&lt;/p&gt;
+</pre>
+
+<p>That's all we need to do with the HTML. Next, we'll tell Tangle how to calculate those variables.</p>
 
 <h2>JavaScript</h2>
+
+<p>In JavaScript, we need to "create a tangle" for all of the HTML elements and variables involved in this particular statement.  We do so with <code><b>new Tangle</b></code>, like so:</p>
+
+<pre>
+var tangle = new Tangle(rootElement, model);
+</pre>
+
+<p>But first, we need the <code>rootElement</code> and the <code>model</code>.</p>
+
+
+<h6>rootElement</h6>
+
+<p>The <code>rootElement</code> refers to the element that contains our statement.  In this case, we put an <code>id</code> attribute on the surrounding paragraph, so we can find it easily:</p>
+
+<pre>
+var rootElement = document.getElementById("calorieCalculator");
+</pre>
+
+
+<h6>model</h6>
+
+<p>The <code>model</code> tells Tangle how to initialize and update the variables. It has this form:</p>
+
+<pre>
+var model = {
+    initialize: function () { ... },
+    update: function () { ... }
+};
+</pre>
+
+<p>The <code>initialize</code> method runs when the tangle is first created.  This is where you set the initial values of independent variables.  We want the statement initially to read, "When you eat 3 cookies...", so we need the <code>cookies</code> variable to start at 3.</p>
+
+<pre>
+var model = {
+    initialize: function () {
+        <strong>this.cookies = 3;</strong>
+    },
+    update: function () { ... }
+};
+</pre>
+
+<p>The <code>update</code> method runs whenever a variable changes.  This is where you describe how to calculate "derived variables" &mdash; variables that depend on others.  The <code>calories</code> variable can be calculated from <code>cookies</code>:
+
+<pre>
+var model = {
+    initialize: function () {
+        this.cookies = 3;
+    },
+    update: function () {
+        <strong>this.calories = this.cookies * 50;</strong>
+    }
+};
+</pre>
+
+<p>and the <code>dailyPercent</code> variable can be calculated from <code>calories</code>.</p>
+
+<pre>
+var model = {
+    initialize: function () {
+        this.cookies = 3;
+    },
+    update: function () {
+        this.calories = this.cookies * 50;
+        <strong>this.dailyPercent = 100 * this.calories / 2100;</strong>
+    }
+};
+</pre>
+
+<p>This works fine, but it's a little hard to read.  Someone perusing this code might not immediately understand what the "50" and "2100" are all about.  Let's give them more descriptive names.</p>
+
+<pre>
+var model = {
+    initialize: function () {
+        this.cookies = 3;
+        <strong>this.caloriesPerCookie = 50;</strong>
+        <strong>this.dailyCalories = 2100;</strong>
+    },
+    update: function () {
+        this.calories = this.cookies * <strong>this.caloriesPerCookie</strong>;
+        this.dailyPercent = 100 * this.calories / <strong>this.dailyCalories</strong>;
+    }
+};
+</pre>
+
+<p>The code is now much easier to follow.  And later, if we want <code>caloriesPerCookie</code> or <code>dailyCalories</code> to be adjustable, we can do so directly in the HTML, without touching the JavaScript.</p>
+
+
+<h6>new Tangle</h6>
+
+<p>We can now create the tangle.  Instead of writing out the <code>rootElement</code> and <code>model</code> as separate variables, we typically just define them inline, like so:</p>
+
+<pre>
+var tangle = new Tangle (document.getElementById("calorieCalculator"), {
+    initialize: function () {
+        this.cookies = 3;
+        this.caloriesPerCookie = 50;
+        this.dailyCalories = 2100;
+    },
+    update: function () {
+        this.calories = this.cookies * this.caloriesPerCookie;
+        this.dailyPercent = 100 * this.calories / this.dailyCalories;
+    }
+});
+</pre>
+
+<p>That's all there is to the JavaScript.</p>
+
+
+<h2>Formats</h2>
+
+<p>We're almost done.  But when we try it out, we get this:</p>
+
+<div id="cookieExample2" class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <b data-var="calories"> calories</b>.  That's <span data-var="dailyPercent">%</span> of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>Our <code>dailyPercent</code> is perhaps a little more precise than necessary.  To tell Tangle how to properly display that variable, we can specify a format.  In the HTML, we add a <code><b>data-format</b></code> attribute:</p>
+
+<pre>
+That's &lt;span data-var="dailyPercent" <strong>data-format="%.0f"</strong>&gt;%&lt;/span&gt;
+of your recommended daily calories.
+</pre>
+
+<p><code>%.0f</code> is known as a <a href="http://bit.ly/lwIyZR">printf</a>-style format, which is a standard language for describing how numbers should be printed.  Here, we specified that we wanted to round off the number, with no digits after the decimal point.</p>
+
+<p>It's possible to create your own format functions and use those as well, but in this case, the printf format works fine.</p>
+
+<div id="cookieExample3" class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <b data-var="calories"> calories</b>.  That's <span data-var="dailyPercent" data-format="%.0f">%</span> of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+
+<h2>Possibilities</h2>
+
+<p>We just worked through a very simple example, so give you a taste of what you can tangle.  </p>
 
 
 
@@ -152,9 +316,9 @@
 <div class="author">by <a href="http://worrydream.com/">Bret Victor</a></div>
 
 <div class="menu">
-    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp;
     <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 

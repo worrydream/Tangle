@@ -35,16 +35,15 @@ body {
 }
 
 #header {
-  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
   position: relative;
 }
 
 #header h1 {
-  font-size: 42px;
+  font: 46px "BorisBlackBloxx", "Helvetica", sans-serif;
   color: #fff;
   position:absolute;
   left: 35px;
-  top: -2px;
+  top: -8px;
 }
 
 #header h1 a {
@@ -61,17 +60,17 @@ body {
   color: #aa8d5a;
   position:absolute;
   left: 42px;
-  top: 53px;
+  top: 54px;
 }
 
 #header .menu {
   position: absolute;
-  left: 320px;
-  top: 50px;
+  left: 310px;
+  top: 56px;
 }
 
 .menu {
-  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  font: 12px "Insolent", "Helvetica", sans-serif;
 }
 
 .menu a {
@@ -93,7 +92,7 @@ body {
   height:40px;
   position:relative;
   color:#fff;
-  font: 11px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
+  font: 11px "Insolent", "Helvetica", sans-serif;
 }
 
 #footerShadow {
@@ -105,8 +104,8 @@ body {
 
 #footer .menu {
   position: absolute;
-  left: 320px;
-  top: 12px;
+  left: 310px;
+  top: 15px;
 }
 
 #footer .author {
@@ -114,7 +113,7 @@ body {
   color: #aa8d5a;
   position:absolute;
   left:45px;
-  top:12px;
+  top:13px;
 }
 
 #footer .author a {
@@ -199,21 +198,21 @@ li {
 }
 
 h2 {
-  font: 24px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
-  margin-top:30px;
-  margin-bottom:0px;
+  font: 26px "Insolent", "Helvetica", sans-serif;
+  margin-top:32px;
+  margin-bottom:-8px;
 }
 
 h4 {
-  font: 16px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
-  margin-top:20px;
-  margin-bottom:10px;
+  font: 18px "Insolent", "Helvetica", sans-serif;
+  margin-top:26px;
+  margin-bottom:-6px;
 }
 
 h6 {
-  font: 15px "BorisBlackBloxxRegular", "Helvetica", sans-serif;
-  margin-top:20px;
-  margin-bottom:-5px;
+  font: 15px "Insolent", "Helvetica", sans-serif;
+  margin-top:26px;
+  margin-bottom:-7px;
 }
 
 strong {

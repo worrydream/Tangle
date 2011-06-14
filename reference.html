@@ -6,6 +6,7 @@
     <title>Tangle: API Reference</title>
 
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="Fonts/Insolent/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
 
@@ -24,9 +25,9 @@
 <h3>explorable explanations made easy</h3>
 
 <div class="menu">
-    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp;
     <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 
@@ -52,6 +53,8 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 <!-- HTML attributes -->
 
+<p style="text-align:center; margin-top:40px;">*&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;*</p>
+
 <h2 id="html">HTML attributes</h2>
 
 <ul>
@@ -63,53 +66,76 @@
 
 <h4 id="class">class</h4>
 
-<p><code><pre>
+<pre>
 I want &lt;span <b>class="TKAdjustableNumber"</b> data-var="cookies"&gt;&lt;/span&gt; cookies.
-</pre></code></p>
+</pre>
 
-<p>The <code>class</code> attribute specifies a JavaScript class which can turn an element into a control that adjusts a variable, or a view that displays a variable.  Because this attribute is used for CSS classes as well, you can style your element with CSS, and specify its behavior with JavaScript.</p>
+<p>The <code>class</code> attribute normally specifies a CSS class which gives an element a style.  With Tangle, it can also specify a JavaScript class which gives an element a behavior.  It might turn an element into a control that adjusts a variable, or a view that displays a variable.  It is common to define a class in both CSS and Tangle, for appearance and behavior respectively.</p>
 
-<p>See <a href="#classes">Tangle.classes</a> for details on how to write and plug in a class.</p>
+<p>A number of basic classes are included with <a href="#kit">TangleKit</a>.  For details on how to create and plug in your own classes, see <a href="#classes">Tangle.classes</a>.</p>
 
-<p>An element can have any number of classes, like so:&nbsp;  <code>&lt;span <b>class="MyClass MyOtherClass" data-var="cookies"&gt;</b></code>.&nbsp;  Any of the classes can be defined in CSS, JavaScript, both, or neither.  You might use one class for the visual presentation of a variable, and another to provide interactive manipulation.</p>
+<p>An element can have any number of classes, like so:</p>
+
+<pre>
+&lt;span class="<b>MyClass MyOtherClass</b>" data-var="cookies"&gt;
+</pre>
+
+<p>Any of the classes can be defined in CSS, JavaScript, both, or neither.  You might use one class for the visual presentation of a variable, and another to provide interactive manipulation.</p>
 
 
 <h4 id="data-var">data-var</h4>
 
-<p><code><pre>
+<pre>
 I ate &lt;span <b>data-var="cookies"</b>&gt;&lt;/span&gt; cookies.
-</pre></code></p>
+</pre>
 
-<p>The <code>data-var</code> attribute specifies a variable.  You typically use it to display the variable's value in some way, or to specify which variable a UI control should adjust.</p>
+<p>The <code>data-var</code> attribute specifies a variable.  You typically use it to display the variable's value in some way, or to specify which variable a class should adjust.</p>
 
 <p>The <code>data-var</code> attribute can go on any element.  If the element has a class, the variable name will be passed to the class's <code>initialize</code> method, and the variable's value will be passed to the class's <code>update</code> method whenever it changes.</p>
 
 <p>If none of the element's classes has an <code>update</code> method, Tangle will insert the variable's value into the element (before any existing content), and update it whenever it changes.  The value will be formatted with the <code>data-format</code> attribute, if present.  Tangle won't insert anything if any class has an <code>update</code> method, because it assumes that class is handling the display of the variable.</p>
 
-<p>An element can have multiple variables, like so:&nbsp;  <code>&lt;span class="MyClass" <b>data-var="cookies tacos"&gt;</b></code>.&nbsp;  All variable names will be passed to MyClass's <code>initialize</code> method, and all values will be passed to MyClass's <code>update</code> method.  This is useful for two-dimensional controls that adjust two variables at once, or views that display multiple variables.  See <a href="#classes">Tangle.classes</a> for details.</p>
+<p>An element can have multiple variables, like so:</p>
+
+<pre>
+&lt;span class="MyClass" data-var="<b>cookies tacos</b>"&gt;
+</pre>
+
+<p>All variable names will be passed to MyClass's <code>initialize</code> method, and all values will be passed to MyClass's <code>update</code> method.  This is useful for two-dimensional controls that adjust two variables at once, or views that depend on multiple variables.  See <a href="#classes">Tangle.classes</a> for details.</p>
 
 
 <h4 id="data-format">data-format</h4>
 
-<p><code><pre>
-That cookie costs &lt;span data-var="cost" <b>data-format="$%.2f"</b>&gt;&lt;/span&gt;.
-</pre></code></p>
+<pre>
+That cookie costs $&lt;span data-var="cost" <b>data-format="%.2f"</b>&gt;&lt;/span&gt;.
+</pre>
 
-<p>The variable is presented with the given format.  You can specify a printf-style format, or define your own format functions.  See <a href="#formats">Tangle.formats</a> for details on defining custom formats.</p>
+<p>The variable is presented with the given format.  You can specify a <a href="http://bit.ly/lwIyZR">printf</a>-style format, or define your own format functions.  To use printf-style formats, you must include a sprintf library, such as the one that is provided with TangleKit.  For details on defining custom formats, see <a href="#formats">Tangle.formats</a>.</p>
 
-<p>To use printf-style formats, you must include a sprintf library, such as the one that is provided with TangleKit.</p>
+<p>If you specify multiple variables in the <code>data-var</code> attribute, all values will be passed to the format:</p>
+
+<pre>
+The cookies cost $&lt;span data-var="<b>cost quantity</b>" data-format="<b>%.2f per %d</b>"&gt;&lt;/span&gt;.
+</pre>
+
+<p>If you are using a custom format, you can pass parameters to it, separated by spaces.  See <a href="#formats">Tangle.formats</a> for details.</p>
+
+<pre>
+&lt;span data-var="cookies" data-format="<b>myFormat parameter1 parameter2</b>"&gt;
+</pre>
 
 
 <h4 id="data-other">other data attributes</h4>
 
 <p>Classes may make use of other attributes with the <code>data-</code> prefix.  For example, specifying the minimum and maximum values for a <code>TKAdjustableNumber</code>:
 
-<p><code><pre>
+<pre>
 &lt;span class="TKAdjustableNumber" data-var="cookies" <b>data-min="0" data-max="20"</b>&gt;
-</pre></code></p>
+</pre>
 
+<p>These additional attributes are passed to the class's <code>initialize</code> method, via the <code>options</code> parameter.</p>
 
-<p>For details, see the documentation for the individual class.</p>
+<p>For details on what attributes a class accepts, see the documentation for the individual class.</p>
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -129,16 +155,16 @@ That cookie costs &lt;span data-var="cost" <b>data-format="$%.2f"</b>&gt;&lt;/sp
 
 <h4 id="new">new Tangle</h4>
 
-<p><code><pre>
+<pre>
 var tangle = <b>new Tangle</b> (rootElement, model);
-</pre></code></p>
+</pre>
 
-<p><code><pre>
+<pre>
 var tangle = <b>new Tangle</b> (document.getElementById("calorieCalculator"), {
     initialize: function () { this.cookies = 4; },
     update:     function () { this.calories = this.cookies * 50; }
 });
-</pre></code></p>
+</pre>
 
 <p>Creates a new tangle.  Tangle looks under rootElement for elements with classes or variables.  Classes are initialized, and the model is set as described below.</p>
 
@@ -147,16 +173,16 @@ var tangle = <b>new Tangle</b> (document.getElementById("calorieCalculator"), {
 
 <h4 id="setModel">setModel</h4>
 
-<p><code><pre>
+<pre>
 tangle.<b>setModel</b>(newModel);
-</pre></code></p>
+</pre>
 
-<p><code><pre>
+<pre>
 tangle.<b>setModel</b>({
     initialize: function () { this.cookies = 4; },
     update:     function () { this.calories = this.cookies * 50; }
 });
-</pre></code></p>
+</pre>
 
 <p>This method changes and resets the current model.</p>
 
@@ -164,36 +190,36 @@ tangle.<b>setModel</b>({
 
 <p>You may also define any methods that you want to use internally:</p>
 
-<p><code><pre>
+<pre>
 {  initialize: function () { this.cookies = 4; },
    update:     function () { this.calories = this.cookies * this.getCalPerCookie(); },
    getCalPerCookie: function () { ... }
 }
-</pre></code></p>
+</pre>
 
 
 <h4 id="getValue">getValue</h4>
 
-<p><code><pre>
+<pre>
 var value = tangle.<b>getValue</b>(variable);
-</pre></code></p>
+</pre>
 
-<p><code><pre>
+<pre>
 var numberOfCookies = tangle.<b>getValue</b>("cookies");
-</pre></code></p>
+</pre>
 
 <p>Returns the current value of a variable.</p>
 
 
 <h4 id="setValue">setValue</h4>
 
-<p><code><pre>
+<pre>
 tangle.<b>setValue</b>(variable, newValue);
-</pre></code></p>
+</pre>
 
-<p><code><pre>
+<pre>
 tangle.<b>setValue</b>("cookies", 17);
-</pre></code></p>
+</pre>
 
 <p>Sets a new value for a variable.  If the new value is different than the old one, the model is updated.</p>
 
@@ -202,13 +228,13 @@ tangle.<b>setValue</b>("cookies", 17);
 
 <h4 id="setValues">setValues</h4>
 
-<p><code><pre>
+<pre>
 tangle.<b>setValues</b>({ variableName:value, variableName:value });
-</pre></code></p>
+</pre>
 
-<p><code><pre>
+<pre>
 tangle.<b>setValues</b>({ cookies:17, cupcakes:12 });
-</pre></code></p>
+</pre>
 
 <p>Sets values for multiple variables at once.</p>
 
@@ -220,58 +246,60 @@ tangle.<b>setValues</b>({ cookies:17, cupcakes:12 });
 
 <h2 id="classes">Tangle.classes</h2>
 
-<p><code><pre>
+<pre>
 Tangle.classes.MyClass = {
-    initialize: function (element, tangle, variable) { ... },  // optional
-    update: function (element, value) { ... }                  // optional
+    initialize: function (element, options, tangle, variable) { ... },  // optional
+    update: function (element, value) { ... }   // optional
 };
-</pre></code></p>
+</pre>
 
 <p>A Tangle class lets you associate some JavaScript code with an HTML element.  It's typically used to define a control that adjusts a variable, or a view that displays a variable, although more creative uses are possible.</p>
 
 <p>If your HTML contains:</p>
 
-<p><code><pre>
+<pre>
 &lt;span <b>class="MyClass"</b> data-var="cookies"&gt;
-</pre></code></p>
+</pre>
 
 <p>then when the tangle is created, MyClass will be instantiated for that element, and if there is an <code><b>initialize</b></code> method, it will be called, and passed the name of the variable.  If there is an <code><b>update</b></code> method, it will be called when the specified variable is initialized or changed, and passed the value of the variable.</p>
 
 
-<h6>initialize</h6>
+<h4>initialize</h4>
 
 <p>The <code><b>initialize</b></code> method is a good place to add event listeners to the element, to set up an interactive control.  The following example implements a control that increments the variable when it is clicked.</p>
 
-<p><code><pre>
+<pre>
 Tangle.classes.ClickableNumber = {
-    <b>initialize</b>: function (element, tangle, variable) {
+    <b>initialize</b>: function (element, options, tangle, variable) {
         element.onclick = function () {
             var value = tangle.getValue(variable);
             tangle.setValue(variable, value + 1);
         };
     }
 };
-</pre></code></p>
+</pre>
+
+<p>The <code>options</code> paramater is described below.</p>
 
 
-<h6>update</h6>
+<h4>update</h4>
 
-<p>The <code><b>update</b></code> method is for updating the element's appearance or contents when the variable changes.  The following example resizes the element's width when the variable changes, perhaps for a bar in a bar graph.</p>
+<p>The <code><b>update</b></code> method is for updating the element's appearance or contents when the variable changes.  The following example resizes the element's width when the variable changes, perhaps for a bar in a bar chart.</p>
 
-<p><code><pre>
+<pre>
 Tangle.classes.StretchyBar = {
     <b>update</b>: function (element, value) {
         element.style.width = "" + value + "px";
     }
 };
-</pre></code></p>
+</pre>
 
 
-<h6>other methods</h6>
+<h4>other methods</h4>
 
 <p>You may also define any methods that you want to use internally.</p>
 
-<p><code><pre>
+<pre>
 Tangle.classes.StretchyBar = {
     update: function (element, value) {
         var width = value * this.getStretchiness();
@@ -281,55 +309,79 @@ Tangle.classes.StretchyBar = {
         ...
     }
 };
-</pre></code></p>
+</pre>
 
 
-<h6>CSS</h6>
+<h4>CSS</h4>
 
 <p>Because these are CSS classes as well as Tangle classes, you can often specify the element's style in a CSS file, and only deal with behavior in JavaScript.</p>
 
-<p><code><pre>
+<pre>
 .ClickableNumber {
     color: #46f;
     border-bottom: 1px dashed #46f;
     cursor: pointer;
 }
-</pre></code></p>
+</pre>
 
 
-<h6>framework classes</h6>
+<h4>framework classes</h4>
 
 <p>If <code>Tangle.classes.MyClass</code> is a function instead of an object, Tangle will call it as a constructor, instead of directly invoking an <code>initialize</code> method.  So, if you're using a framework such as MooTools that has its own notion of what a "class" is, you can use its classes directly, and take advantage of inheritance and other features.</p>
 
-<p><code><pre>
+<pre>
 Tangle.classes.MyClass = new Class({  // assuming we're using MooTools
     Extends: MyBaseClass,
-    initialize: function (element, tangle, variable) {
-       this.parent(element, tangle, variable);
+    initialize: function (element, options, tangle, variable) {
+       this.parent(element, options, tangle, variable);
        ...
     }
 });
-</pre></code></p>
+</pre>
 
 
-<h6>multiple variables</h6>
+<h4>multiple variables</h4>
 
 <p>An HTML element can specify any number of variables, and they will all be passed to <code><b>initialize</b></code> and <code><b>update</b></code>.  For example, if your class expects two variables:</p>
 
-<p><code><pre>
+<pre>
 &lt;span class="MyClass" <b>data-var="cookies cupcakes"</b>&gt;
-</pre></code></p>
+</pre>
 
 <p>you would define it like so:</p>
 
-<p><code><pre>
+<pre>
 Tangle.classes.MyClass = {
-    initialize: function (element, tangle, variable1, variable2) { ... },
-    update: function (element, value1, value2) { ... }
+    initialize: function (element, options, tangle, <b>variable1, variable2</b>) { ... },
+    update: function (element, <b>value1, value2</b>) { ... }
 };
-</pre></code></p>
+</pre>
 
 <p>This is useful for two-dimensional controls that adjust two variables at once, or views that display multiple variables.</p>
+
+
+<h4>options</h4>
+
+<p>The <code>initialize</code> method is passed an <code><b>options</b></code> parameter:</p>
+
+<pre>
+Tangle.classes.MyClass = {
+    initialize: function (element, <b>options</b>, tangle, variable) { ... }
+};
+</pre>
+
+<p>The <code>options</code> parameter is an object containing the <code>data-</code> attributes of the elements.  (The "<code>data-</code>" prefix is removed.)  If your HTML is:</p> 
+
+<pre>
+&lt;span class="MyClass" <b>data-min="1" data-max="10"</b>&gt;
+</pre>
+
+<p>then <code>options</code> will be an object like so:</p>
+
+<pre>
+{ min:"1", max:"10" }
+</pre>
+
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -339,25 +391,50 @@ Tangle.classes.MyClass = {
 
 <h2 id="formats">Tangle.formats</h2>
 
-<p><code><pre>
-Tangle.formats.MyFormat = function (value) { return "..."; }
-</pre></code></p>
+<pre>
+Tangle.formats.myFormat = function (value) { return "..."; }
+</pre>
 
-<p>A Tangle format defines how to present a value.  If your HTML contains:</p>
+<p>A Tangle format defines how to present a value.  If your HTML is:</p>
 
-<p><code><pre>
+<pre>
 &lt;span data-var="fractionOfCookiesRemainng" <b>data-format="percent"</b>&gt;
-</pre></code></p>
+</pre>
 
 <p>then when the variable is updated, the following function will be called to turn the value into a string.</p>
 
-<p><code><pre>
-Tangle.formats.percent = function (value) {   // formats 0.42 as "42%"
+<pre>
+Tangle.formats.percent = function (value) {     // formats 0.42 as "42%"
     return "" + Math.round(value * 100) + "%";
 };
-</pre></code></p>
+</pre>
 
-<p>You can often use printf-style formats instead, but <code>Tangle.formats</code> is available for your custom formatting needs.  To use printf-style formats, you must include a sprintf library, such as the one that is provided with TangleKit.</p>
+<p>You can often use <a href="http://bit.ly/lwIyZR">printf</a>-style formats instead, but <code>Tangle.formats</code> is available for your custom formatting needs.  To use printf-style formats, you must include a sprintf library, such as the one that is provided with TangleKit.</p>
+
+<h4>multiple variables</h4>
+
+<p>If the <code>data-var</code> attribute specifies multiple variables, all values will be passed to the function.</p>
+
+<pre>
+&lt;span data-var="<b>cookies cupcakes</b>" data-format="myFormat"&gt;
+</pre>
+
+<pre>
+Tangle.formats.myFormat = function (value1, value2) { return "..."; }
+</pre>
+
+<h4>parameters</h4>
+
+<p>You can specify parameters in the <code>data-format</code> attribute, separated by spaces.  These strings will be passed to the function, after the variable values.</p>
+
+<pre>
+&lt;span data-var="cookies" data-format="<b>myFormat huge</b>"&gt;
+</pre>
+
+<pre>
+Tangle.formats.myFormat = function (value, size) { return "..."; }
+</pre>
+
 
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -384,9 +461,9 @@ Tangle.formats.percent = function (value) {   // formats 0.42 as "42%"
 <div class="author">by <a href="http://worrydream.com/">Bret Victor</a></div>
 
 <div class="menu">
-    <a href="guide.html">Getting Started</a> &nbsp; &nbsp; &nbsp;
-    <a href="reference.html">API Reference</a> &nbsp; &nbsp; &nbsp;
-    <a href="download.html">Download</a> &nbsp; &nbsp; &nbsp;
+    <a href="guide.html">Getting Started</a> &nbsp; &nbsp;
+    <a href="reference.html">API Reference</a> &nbsp; &nbsp;
+    <a href="download.html">Download</a> &nbsp; &nbsp;
     <a href="https://groups.google.com/group/tangle-talk">Discuss</a>
 </div>
 

@@ -8,7 +8,7 @@
 
 window.addEvent('domready', function () {
 
-    new Tangle(document.getElementById("cookieExample"), {
+    var model = {
         initialize: function () {
             this.cookies = 3;
             this.caloriesPerCookie = 50;
@@ -16,8 +16,13 @@ window.addEvent('domready', function () {
         },
         update: function () {
             this.calories = this.cookies * this.caloriesPerCookie;
-            this.dailyPercent = Math.round(100 * this.calories / this.caloriesPerDay);
+            this.dailyPercent = 100 * this.calories / this.caloriesPerDay;
         }
+    };
+    
+    [ "cookieExample", "cookieExample2", "cookieExample3" ].each( function (id) {
+        var element = document.getElementById(id);
+        if (element) { new Tangle(element,model); }
     });
 
 });
