@@ -1,6 +1,6 @@
 //
 //  Tangle.js
-//  Tangle 0.0.1
+//  Tangle 0.1.0
 //
 //  Created by Bret Victor on 5/2/10.
 //  (c) 2011 Bret Victor.  MIT open-source license.
@@ -67,8 +67,8 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         }
 
         // initialize interesting elements in this list.  (Can't traverse "elements"
-        // directly, because "elements" is "live", and views that change the node tree
-        // will change "elements" mid-traversal.)
+        // directly, because elements is "live", and views that change the node tree
+        // will change elements mid-traversal.)
         
         for (var i = 0, length = interestingElements.length; i < length; i++) {
             var element = interestingElements[i];
@@ -103,7 +103,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         }
     }
             
-    function getViewsForElement(element, classNames, varNames) {
+    function getViewsForElement(element, classNames, varNames) {   // initialize classes
         var views = null;
         
         for (var i = 0, length = classNames.length; i < length; i++) {
@@ -123,7 +123,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         return views;
     }
     
-    function getOptionsForElement(element) {
+    function getOptionsForElement(element) {   // might use dataset someday
         var options = {};
 
         var attributes = element.attributes;
@@ -230,7 +230,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     //
     // setters
     
-    function addViewSettersForElement(element, varNames, view) {
+    function addViewSettersForElement(element, varNames, view) {   // element has a class with an update method
         var setter;
         if (varNames.length <= 1) {
             setter = function (value) { view.update(element, value); };
@@ -246,7 +246,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
         addSetterForVariables(setter, varNames);
     }
 
-    function addFormatSettersForElement(element, varNames, formatter) {
+    function addFormatSettersForElement(element, varNames, formatter) {  // tangle is injecting a formatted value itself
         var span = null;
         var setter = function (value) {
             if (!span) { 
@@ -348,7 +348,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     }
     
     function updateModel(shouldInitialize) {
-        var ShadowModel = function () {};
+        var ShadowModel = function () {};  // make a shadow object, so we can see exactly which properties changed
         ShadowModel.prototype = _model;
         var shadowModel = new ShadowModel;
         

@@ -1,6 +1,6 @@
 //
 //  TangleKit.js
-//  Tangle 0.0.1
+//  Tangle 0.1.0
 //
 //  Created by Bret Victor on 6/10/11.
 //  (c) 2011 Bret Victor.  MIT open-source license.
@@ -15,7 +15,8 @@
 //  TKIf
 //
 //  Shows the element if value is true (non-zero), hides if false.
-//  Add the data-invert="1" attribute to hide if false instead.
+//
+//  Attributes:  data-invert (optional):  show if false instead.
 
 Tangle.classes.TKIf = {
     
@@ -35,6 +36,8 @@ Tangle.classes.TKIf = {
 //  TKSwitch
 //
 //  Shows the element's nth child if value is n.
+//
+//  False or true values will show the first or second child respectively.
 
 Tangle.classes.TKSwitch = {
 
@@ -48,12 +51,12 @@ Tangle.classes.TKSwitch = {
 
 //----------------------------------------------------------
 //
-//  TKPlusMinus
+//  TKSwitchPositiveNegative
 //
 //  Shows the element's first child if value is positive or zero.
 //  Shows the element's second child if value is negative.
 
-Tangle.classes.TKPlusMinus = {
+Tangle.classes.TKSwitchPositiveNegative = {
 
     update: function (element, value) {
         Tangle.classes.TKSwitch.update(element, value < 0);
@@ -80,9 +83,52 @@ Tangle.classes.TKToggle = {
 
 //----------------------------------------------------------
 //
+//  TKNumberField
+//
+//  An input box where a number can be typed in.
+//
+//  Attributes:  data-size (optional): width of the box in characters
+
+Tangle.classes.TKNumberField = {
+
+    initialize: function (element, options, tangle, variable) {
+        this.input = new Element("input", {
+    		type: "text",
+    		"class":"TKNumberFieldInput",
+    		size: options.size || 6
+        }).inject(element, "top");
+        
+        var inputChanged = (function () {
+            var value = this.getValue();
+            tangle.setValue(variable, value);
+        }).bind(this);
+        
+        this.input.addEvent("keyup",  inputChanged);
+        this.input.addEvent("blur",   inputChanged);
+        this.input.addEvent("change", inputChanged);
+	},
+	
+	getValue: function () {
+        var value = parseFloat(this.input.get("value"));
+        return isNaN(value) ? 0 : value;
+	},
+	
+	update: function (element, value) {
+	    var currentValue = this.getValue();
+	    if (value !== currentValue) { this.input.set("value", "" + value); }
+	}
+};
+
+
+//----------------------------------------------------------
+//
 //  TKAdjustableNumber
 //
 //  Drag a number to adjust.
+//
+//  Attributes:  data-min (optional): minimum value
+//               data-max (optional): maximum value
+//               data-step (optional): granularity of adjustment (can be fractional)
 
 var isAnyAdjustableNumberDragging = false;  // hack for dragging one value over another one
 
@@ -190,6 +236,10 @@ Tangle.classes.TKAdjustableNumber = {
 //----------------------------------------------------------
 //
 //  formats
+//
+//  Most of these are left over from older versions of Tangle,
+//  before parameters and printf were available.  They should
+//  be redesigned.
 //
 
 function formatValueWithPrecision (value,precision) {

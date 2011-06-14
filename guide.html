@@ -247,7 +247,7 @@ var model = {
 
 <h6>new Tangle</h6>
 
-<p>We can now create the tangle.  Instead of writing out the <code>rootElement</code> and <code>model</code> as separate variables, we typically just define them inline, like so:</p>
+<p>We can now create the tangle.  Instead of writing out the <code>rootElement</code> and <code>model</code> separately, we typically just define them inline, like so:</p>
 
 <pre>
 var tangle = new Tangle (document.getElementById("calorieCalculator"), {
@@ -266,7 +266,7 @@ var tangle = new Tangle (document.getElementById("calorieCalculator"), {
 <p>That's all there is to the JavaScript.</p>
 
 
-<h2>Formats</h2>
+<h2>Formats and Classes</h2>
 
 <p>We're almost done.  But when we try it out, we get this:</p>
 
@@ -278,7 +278,12 @@ var tangle = new Tangle (document.getElementById("calorieCalculator"), {
     <div class="exampleBottom"></div>
 </div>
 
-<p>Our <code>dailyPercent</code> is perhaps a little more precise than necessary.  To tell Tangle how to properly display that variable, we can specify a format.  In the HTML, we add a <code><b>data-format</b></code> attribute:</p>
+<p>Our <code>dailyPercent</code> is perhaps a little more precise than necessary.  To tell Tangle how to properly display that variable, we can specify a format.</p>
+
+
+<h6>Formats</h6>
+
+<p>In the HTML, we add a <code><b>data-format</b></code> attribute:</p>
 
 <pre>
 That's &lt;span data-var="dailyPercent" <strong>data-format="%.0f"</strong>&gt;%&lt;/span&gt;
@@ -298,9 +303,38 @@ of your recommended daily calories.
 </div>
 
 
+<h6>Classes</h6>
+
+<p>Currently, we can adjust the <code>cookies</code> variable by dragging it, thanks to the <code>TKAdjustableNumber</code> class that we specified:</p>
+
+<pre>
+&lt;span data-var="cookies" class="<b>TKAdjustableNumber</b>"&gt;
+</pre>
+
+<p>Perhaps you don't like dragging, and would rather let your readers type in a number instead.  We can simply switch the class to <code>TKNumberField</code>:</p>
+
+<pre>
+&lt;span data-var="cookies" class="<strong>TKNumberField</strong>"&gt;
+</pre>
+
+<p>And our statement becomes:</p>
+
+<div id="cookieExample4" class="example">
+    <div class="exampleTop"></div>
+    <div class="exampleCenter">
+        <p>When you eat <span data-var="cookies" class="TKNumberField" data-size="3"> cookies</span>, you consume <b data-var="calories"> calories</b>.  That's <span data-var="dailyPercent" data-format="%.0f">%</span> of your recommended daily calories.</p>
+    </div>
+    <div class="exampleBottom"></div>
+</div>
+
+<p>TangleKit contains a growing selection of classes, and you can define your own classes easily.</p>
+
+
 <h2>Possibilities</h2>
 
-<p>We just worked through a very simple example, to give you a taste of what you can tangle.  </p>
+<p>We just worked through a very simple example, to give you a taste of what you can tangle.  But there's so much more you can do.</p>
+
+
 
 
 

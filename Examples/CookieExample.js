@@ -20,9 +20,11 @@ window.addEvent('domready', function () {
         }
     };
     
-    [ "cookieExample", "cookieExample2", "cookieExample3" ].each( function (id) {
+    for (var i = 1; ; i++) {
+        var id = "cookieExample" + ((i > 1) ? i : "");
         var element = document.getElementById(id);
-        if (element) { new Tangle(element,model); }
-    });
-
+        if (!element) { break; }
+        new Tangle(element,model);
+    }
+    
 });
