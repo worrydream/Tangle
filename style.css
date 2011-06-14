@@ -194,8 +194,17 @@ ul {
   margin-top:5px;
 }
 
+ul.dotted {
+  list-style-type: disc;
+  margin-left:24px;
+}
+
 li {
   margin-top:2px;
+}
+
+ul.dotted li {
+  margin-top:6px;
 }
 
 h2 {

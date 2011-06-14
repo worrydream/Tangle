@@ -19,7 +19,7 @@
 //  ------ UI components ------
 //
 //  Tangle.classes.myClass = {
-//     initialize: function (element, tangle, variable) { ... },
+//     initialize: function (element, options, tangle, variable) { ... },
 //     update: function (element, value) { ... }
 //  };
 //  Tangle.formats.myFormat = function (value) { return "..."; };
