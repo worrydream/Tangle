@@ -84,7 +84,6 @@ window.addEvent('domready', function () {
     });
     
     tangle.setValue("index", 2);  // initialize both kf1 and kf2, etc.
-
 });
 
 

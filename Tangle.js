@@ -35,7 +35,8 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     tangle.setValues = setValues;
 
     var _model;
-    var _settersByVariableName = {};
+    var _nextSetterID = 0;
+    var _setterInfosByVariableName = {};   //  { varName: { setterID:7, setter:function (v) { } }, ... }
     var _varargConstructorsByArgCount = [];
 
 
@@ -242,9 +243,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             };
         }
 
-        for (var i = 0; i < varNames.length; i++) {
-            addSetterForVariable(varNames[i], setter);  // TODO: if 2 varNames, and both variables change, this is called twice
-        }
+        addSetterForVariables(setter, varNames);
     }
 
     function addFormatSettersForElement(element, varNames, formatter) {
@@ -257,21 +256,37 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             span.innerHTML = formatter(value);
         };
 
-        for (var i = 0; i < varNames.length; i++) {
-            addSetterForVariable(varNames[i], setter);
-        }
+        addSetterForVariables(setter, varNames);
     }
     
-    function addSetterForVariable(varName, setter) {
-        if (!_settersByVariableName[varName]) { _settersByVariableName[varName] = []; }
-        _settersByVariableName[varName].push(setter);
+    function addSetterForVariables(setter, varNames) {
+        var setterInfo = { setterID:_nextSetterID, setter:setter };
+        _nextSetterID++;
+
+        for (var i = 0; i < varNames.length; i++) {
+            var varName = varNames[i];
+            if (!_setterInfosByVariableName[varName]) { _setterInfosByVariableName[varName] = []; }
+            _setterInfosByVariableName[varName].push(setterInfo);
+        }
     }
 
-    function applySettersForVariable(varName, value) {
-        var setters = _settersByVariableName[varName];
-        if (!setters) { return; }
-        for (var i = 0, length = setters.length; i < length; i++) {
-            setters[i](value);
+    function applySettersForVariables(varNames) {
+        var appliedSetterIDs = {};  // remember setterIDs that we've applied, so we don't call setters twice
+    
+        for (var i = 0, ilength = varNames.length; i < ilength; i++) {
+            var varName = varNames[i];
+            var setterInfos = _setterInfosByVariableName[varName];
+            if (!setterInfos) { continue; }
+            
+            var value = _model[varName];
+            
+            for (var j = 0, jlength = setterInfos.length; j < jlength; j++) {
+                var setterInfo = setterInfos[j];
+                if (setterInfo.setterID in appliedSetterIDs) { continue; }  // if we've already applied this setter, move on
+                appliedSetterIDs[setterInfo.setterID] = true;
+                
+                setterInfo.setter(value);
+            }
         }
     }
     
@@ -293,20 +308,22 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     }
 
     function setValues(obj) {
-        var didChangeValue = false;
+        var changedVarNames = [];
 
         for (var varName in obj) {
             var value = obj[varName];
             var oldValue = _model[varName];
-            if (oldValue === undefined) { log("Tangle: setting unknown variable: " + varName);  return; }
+            if (oldValue === undefined) { log("Tangle: setting unknown variable: " + varName);  continue; }
             if (oldValue === value) { continue; }  // don't update if new value is the same
 
             _model[varName] = value;
-            applySettersForVariable(varName, value);
-            didChangeValue = true;
+            changedVarNames.push(varName);
         }
         
-        if (didChangeValue) { updateModel(); }
+        if (changedVarNames.length) {
+            applySettersForVariables(changedVarNames);
+            updateModel();
+        }
     }
     
     function getValuesForVariables(varNames) {
@@ -347,10 +364,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
             changedVarNames.push(varName);
         }
         
-        for (var i = 0, length = changedVarNames.length; i < length; i++) {
-            var varName = changedVarNames[i];
-            applySettersForVariable(varName, _model[varName]);
-        }
+        applySettersForVariables(changedVarNames);
     }
 
 

@@ -6,7 +6,7 @@
     <title>Tangle: a JavaScript library for reactive documents</title>
 
     <!-- stylesheets -->
-	<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="Fonts/Insolent/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="Fonts/BorisBlackBloxx/stylesheet.css" type="text/css">
     <link rel="stylesheet" href="style.css" type="text/css">
@@ -64,7 +64,7 @@ possibilities, play with parameters, and see the document update immediately.</p
 <div id="cookieExample" class="example">
     <div class="exampleTop"></div>
     <div class="exampleCenter">
-        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you will consume <span data-var="calories"></span> calories.</p>
+        <p>When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you consume <span data-var="calories"></span> calories.</p>
     </div>
     <div class="exampleBottom"></div>
 </div>
@@ -74,8 +74,8 @@ possibilities, play with parameters, and see the document update immediately.</p
 <div class="example">
     <div class="exampleTop"></div>
     <div class="exampleCenter">
-        <code>When you eat <b>&lt;span data-var="cookies" class="TKAdjustableNumber"&gt;</b> cookies<b>&lt;/span&gt;</b>, you<br>
-will consume <b>&lt;span data-var="calories"&gt;</b> calories<b>&lt;/span&gt;</b>.</code>
+        <code>When you eat <b>&lt;span data-var="cookies" class="TKAdjustableNumber"&gt;</b> cookies<b>&lt;/span&gt;</b>,<br>
+you consume <b>&lt;span data-var="calories"&gt;</b> calories<b>&lt;/span&gt;</b>.</code>
     </div>
     <div class="exampleBottom"></div>
 </div>
@@ -108,54 +108,54 @@ will consume <b>&lt;span data-var="calories"&gt;</b> calories<b>&lt;/span&gt;</b
 <div class="exampleCenter">
 <div id="parkExample">
 
-	<h5>Proposition 21:  Vehicle License Fee for State Parks</h5>
-	
-	<h6>The way it is now:</h6>
+    <h5>Proposition 21:  Vehicle License Fee for State Parks</h5>
+    
+    <h6>The way it is now:</h6>
  
-	<p>California has <span data-var="parkCount"></span> state parks, including state beaches and historic parks. 
-		The current $<span data-var="oldBudget" data-format="e6"></span> million budget is insufficient to maintain these parks, 
-		and <span data-var="oldClosedParkCount"></span> parks will be shut down at least part-time.
-		Most parks charge <span data-var="oldAdmission" data-format="dollars"></span> per vehicle for admission.</p>
+    <p>California has <span data-var="parkCount"></span> state parks, including state beaches and historic parks. 
+        The current $<span data-var="oldBudget" data-format="e6"></span> million budget is insufficient to maintain these parks, 
+        and <span data-var="oldClosedParkCount"></span> parks will be shut down at least part-time.
+        Most parks charge <span data-var="oldAdmission" data-format="dollars"></span> per vehicle for admission.</p>
 
-	<h6>What Prop 21 would do:</h6>
+    <h6>What Prop 21 would do:</h6>
  
-	<p>Proposes to charge car owners an extra $18 on their annual registration bill, to go into the state park fund.  Cars that pay the charge would have free park admission.</p>
+    <p>Proposes to charge car owners an extra $18 on their annual registration bill, to go into the state park fund.  Cars that pay the charge would have free park admission.</p>
 
-	<h6>Analysis:</h6>
+    <h6>Analysis:</h6>
 
-	<p>Suppose that an extra
-		<span data-var="tax" data-format="$%d" class="TKAdjustableNumber" data-min="0" data-max="50"></span> was charged to
-		<span data-var="percentCompliance" class="TKAdjustableNumber" data-min="0" data-max="100" data-step="5">%</span> of
-		<span data-var="isTaxPerVehicle" class="TKToggle TKSwitch"><span>California taxpayers</span><span>vehicle registrations</span></span>.
-		Park admission would be <span data-var="newAdmission" data-format="free" class="TKAdjustableNumber" data-min="0" data-max="25"></span> for
-		<span data-var="newAdmissionAppliesToEveryone" class="TKToggle TKSwitch"><span>those who paid the charge</span><span>everyone</span></span>.
-	</p>
-	
-	<p>This would <span data-var="deltaBudget" class="TKPlusMinus"><span>collect an extra</span><span>lose</span></span>
-		$<span data-var="deltaBudget" data-format="abs_e6"></span> million
-		($<span data-var="taxCollected" data-format="e6"></span> million from the tax,
-		<span data-var="deltaRevenue" class="TKPlusMinus"><span>plus</span><span>minus</span></span>
-		$<span data-var="deltaRevenue" data-format="abs_e6"></span> million
-		<span data-var="deltaRevenue" class="TKPlusMinus"><span>additional</span><span>lost</span></span> revenue from admission)
-		for a total state park budget of $<span data-var="budget" data-format="e6"></span> million.
-		
-	<span data-var="scenarioIndex" class="TKSwitch">
-			<span>This is not sufficient to maintain the parks, and
-				<span data-var="closedParkCount"></span>	parks would be shut down at least part-time.</span>
-			<span>This is sufficient to maintain the parks in their current state, but not fund
-				a program to bring safety and cleanliness up to acceptable standards.</span>
-			<span>This is sufficient to maintain the parks in their current state, plus fund a program to 
-				bring safety and cleanliness up to acceptable standards over the next
-				<span data-var="restorationTime"></span> years.</span>
-			<span>This is sufficient to maintain the parks and bring safety and cleanliness up to acceptable standards,
-				leaving a $<span data-var="surplus" data-format="e6"></span> million per year surplus.</span>
-		</span>
-	</p>
-	
-	<p>Park attendance would
-		<span data-var="deltaVisitorCount" class="TKPlusMinus"><span>rise</span><span>fall</span></span> by
-	 	<span data-var="relativeVisitorCount" data-format="percent"></span>, to
-	 	<span data-var="newVisitorCount" data-format="e6"></span> million visits each year.</p>
+    <p>Suppose that an extra
+        <span data-var="tax" data-format="$%d" class="TKAdjustableNumber" data-min="0" data-max="50"></span> was charged to
+        <span data-var="percentCompliance" class="TKAdjustableNumber" data-min="0" data-max="100" data-step="5">%</span> of
+        <span data-var="isTaxPerVehicle" class="TKToggle TKSwitch"><span>California taxpayers</span><span>vehicle registrations</span></span>.
+        Park admission would be <span data-var="newAdmission" data-format="free" class="TKAdjustableNumber" data-min="0" data-max="25"></span> for
+        <span data-var="newAdmissionAppliesToEveryone" class="TKToggle TKSwitch"><span>those who paid the charge</span><span>everyone</span></span>.
+    </p>
+    
+    <p>This would <span data-var="deltaBudget" class="TKPlusMinus"><span>collect an extra</span><span>lose</span></span>
+        $<span data-var="deltaBudget" data-format="abs_e6"></span> million
+        ($<span data-var="taxCollected" data-format="e6"></span> million from the tax,
+        <span data-var="deltaRevenue" class="TKPlusMinus"><span>plus</span><span>minus</span></span>
+        $<span data-var="deltaRevenue" data-format="abs_e6"></span> million
+        <span data-var="deltaRevenue" class="TKPlusMinus"><span>additional</span><span>lost</span></span> revenue from admission)
+        for a total state park budget of $<span data-var="budget" data-format="e6"></span> million.
+        
+    <span data-var="scenarioIndex" class="TKSwitch">
+            <span>This is not sufficient to maintain the parks, and
+                <span data-var="closedParkCount"></span>    parks would be shut down at least part-time.</span>
+            <span>This is sufficient to maintain the parks in their current state, but not fund
+                a program to bring safety and cleanliness up to acceptable standards.</span>
+            <span>This is sufficient to maintain the parks in their current state, plus fund a program to 
+                bring safety and cleanliness up to acceptable standards over the next
+                <span data-var="restorationTime"></span> years.</span>
+            <span>This is sufficient to maintain the parks and bring safety and cleanliness up to acceptable standards,
+                leaving a $<span data-var="surplus" data-format="e6"></span> million per year surplus.</span>
+        </span>
+    </p>
+    
+    <p>Park attendance would
+        <span data-var="deltaVisitorCount" class="TKPlusMinus"><span>rise</span><span>fall</span></span> by
+        <span data-var="relativeVisitorCount" data-format="percent"></span>, to
+        <span data-var="newVisitorCount" data-format="e6"></span> million visits each year.</p>
 </div>
 </div>
 <div class="exampleBottom"></div>
@@ -171,70 +171,70 @@ will consume <b>&lt;span data-var="calories"&gt;</b> calories<b>&lt;/span&gt;</b
 <div class="exampleCenter">
 <div id="filterExample">
 
-	<p>Below is a simplified digital adaptation of the analog state variable filter.</p>
+    <p>Below is a simplified digital adaptation of the analog state variable filter.</p>
 
-	<p class="filterSidebar">This topology is particularly useful for embedded audio processing, because <i>F<sub>c</sub></i> (cutoff frequency) and <i>Q</i> (resonance) are controlled by independent coefficients, <i>k<sub>f</sub></i> and <i>k<sub>q</sub></i>.  (With most filters, the coefficients are functions of both parameters, which precludes pre-calculated lookup tables.)</p>
+    <p class="filterSidebar">This topology is particularly useful for embedded audio processing, because <i>F<sub>c</sub></i> (cutoff frequency) and <i>Q</i> (resonance) are controlled by independent coefficients, <i>k<sub>f</sub></i> and <i>k<sub>q</sub></i>.  (With most filters, the coefficients are functions of both parameters, which precludes pre-calculated lookup tables.)</p>
 
-	<div class="filterIndent">
-		<canvas class="FilterStepPlot showOnDrag" data-var="kf kq" style="left:-50px;top:-10px;" width="48" height="64"></canvas>
-		<canvas class="FilterTimePlot showOnDrag" data-var="kf kq" style="left:324px;top:-10px;" width="128" height="64"></canvas>
+    <div class="filterIndent">
+        <canvas class="FilterStepPlot showOnDrag" data-var="kf kq" style="left:-50px;top:-10px;" width="48" height="64"></canvas>
+        <canvas class="FilterTimePlot showOnDrag" data-var="kf kq" style="left:324px;top:-10px;" width="128" height="64"></canvas>
 
-		<div class="filterDynamicLabel showOnDrag" data-var="kf" data-format="p3" style="left:70px; top:4px;"></div>
-		<div class="filterDynamicLabel showOnDrag" data-var="kf" data-format="p3" style="left:180px; top:4px;"></div>
-		<div class="filterDynamicLabel showOnDrag" data-var="kq" data-format="neg_p3" style="left:71px; top:48px;"></div>
+        <div class="filterDynamicLabel showOnDrag" data-var="kf" data-format="p3" style="left:70px; top:4px;"></div>
+        <div class="filterDynamicLabel showOnDrag" data-var="kf" data-format="p3" style="left:180px; top:4px;"></div>
+        <div class="filterDynamicLabel showOnDrag" data-var="kq" data-format="neg_p3" style="left:71px; top:48px;"></div>
 
-		<img src="Images/FilterSchematic.png" width="325" height="110">
-	</div>
+        <img src="Images/FilterSchematic.png" width="325" height="110">
+    </div>
 
-	<p>The coefficients and transfer function are:</p>
+    <p>The coefficients and transfer function are:</p>
 
-	<div class="filterIndent">
-		<div class="filterDynamicCoef showOnDrag" style="left:34px;top:0px;width:70px;height:35px;">
-			<div style="position:relative;top:9px;left:2px;"><span data-var="kf" data-format="p3"></span></div>
-		</div>
-		<div class="filterDynamicCoef showOnDrag" style="left:141px;top:0px;width:40px;height:35px;">
-			<div style="position:relative;top:9px;left:2px;"><span data-var="kq" data-format="p3"></span></div>
-		</div>
+    <div class="filterIndent">
+        <div class="filterDynamicCoef showOnDrag" style="left:34px;top:0px;width:70px;height:35px;">
+            <div style="position:relative;top:9px;left:2px;"><span data-var="kf" data-format="p3"></span></div>
+        </div>
+        <div class="filterDynamicCoef showOnDrag" style="left:141px;top:0px;width:40px;height:35px;">
+            <div style="position:relative;top:9px;left:2px;"><span data-var="kq" data-format="p3"></span></div>
+        </div>
 
-		<div class="filterDynamicCoef showOnDrag" style="left:141px;top:46px;width:40px;height:16px;">
-			<div style="position:relative;top:0px;left:2px;"><span data-var="b0" data-format="p3"></span></div>
-		</div>
-		<div class="filterDynamicCoef showOnDrag" style="left:72px;top:67px;width:91px;height:16px;">
-			<div style="position:relative;top:0px;left:58px;"><span data-var="a1neg" data-format="p3"></span></div>
-		</div>
-		<div class="filterDynamicCoef showOnDrag" style="left:196px;top:67px;width:56px;height:16px;">
-			<div style="position:relative;top:0px;left:22px;"><span data-var="a2" data-format="p3"></span></div>
-		</div>
+        <div class="filterDynamicCoef showOnDrag" style="left:141px;top:46px;width:40px;height:16px;">
+            <div style="position:relative;top:0px;left:2px;"><span data-var="b0" data-format="p3"></span></div>
+        </div>
+        <div class="filterDynamicCoef showOnDrag" style="left:72px;top:67px;width:91px;height:16px;">
+            <div style="position:relative;top:0px;left:58px;"><span data-var="a1neg" data-format="p3"></span></div>
+        </div>
+        <div class="filterDynamicCoef showOnDrag" style="left:196px;top:67px;width:56px;height:16px;">
+            <div style="position:relative;top:0px;left:22px;"><span data-var="a2" data-format="p3"></span></div>
+        </div>
 
-		<canvas class="FilterPolePlot showOnDrag" data-var="pole1Real pole1Imag pole2Real pole2Imag" 
-		        width="160" height="160" style="left:276px;top:-36px;"></canvas>
+        <canvas class="FilterPolePlot showOnDrag" data-var="pole1Real pole1Imag pole2Real pole2Imag" 
+                width="160" height="160" style="left:276px;top:-36px;"></canvas>
 
-		<img src="Images/FilterEquations.png" width="281" height="92">
-	</div>
+        <img src="Images/FilterEquations.png" width="281" height="92">
+    </div>
 
 
-	<p>Some example frequency responses:</p>
-	
-	<div class="filterIndent" style="position:relative;">
-		<div class="filterFreqPlot">
-			<canvas class="FilterFreqPlot" data-var="kf1 kq1" width="256" height="128"></canvas>
-			<div class="FilterKnob" data-var="fc1 q1"></div>
-			<div class="filterParams" style="left:5px;top:0px;">
-				<i>F<sub>c</sub></i> = <span data-var="fc1" data-format="freq"></span><br>
-				<i>Q</i> = <span data-var="q1" data-format="p2"></span>
-			</div>
-			<div class="filterUnstable TKIf" data-var="unstable1">Unstable</div>
-		</div>
-		<div class="filterFreqPlot" style="position:absolute; top:0px; left:274px;">
-			<canvas class="FilterFreqPlot" data-var="kf2 kq2" width="256" height="128"></canvas>
-			<div class="FilterKnob" data-var="fc2 q2"></div>
-			<div class="filterParams" style="left:5px;top:0px;">
-				<i>F<sub>c</sub></i> = <span data-var="fc2" data-format="freq"></span><br>
-				<i>Q</i> = <span data-var="q2" data-format="p2"></span>
-			</div>
-			<div class="filterUnstable TKIf" data-var="unstable2">Unstable</div>
-		</div>
-	</div>
+    <p>Some example frequency responses:</p>
+    
+    <div class="filterIndent" style="position:relative;">
+        <div class="filterFreqPlot">
+            <canvas class="FilterFreqPlot" data-var="kf1 kq1" width="256" height="128"></canvas>
+            <div class="FilterKnob" data-var="fc1 q1"></div>
+            <div class="filterParams" style="left:5px;top:0px;">
+                <i>F<sub>c</sub></i> = <span data-var="fc1" data-format="freq"></span><br>
+                <i>Q</i> = <span data-var="q1" data-format="p2"></span>
+            </div>
+            <div class="filterUnstable TKIf" data-var="unstable1">Unstable</div>
+        </div>
+        <div class="filterFreqPlot" style="position:absolute; top:0px; left:274px;">
+            <canvas class="FilterFreqPlot" data-var="kf2 kq2" width="256" height="128"></canvas>
+            <div class="FilterKnob" data-var="fc2 q2"></div>
+            <div class="filterParams" style="left:5px;top:0px;">
+                <i>F<sub>c</sub></i> = <span data-var="fc2" data-format="freq"></span><br>
+                <i>Q</i> = <span data-var="q2" data-format="p2"></span>
+            </div>
+            <div class="filterUnstable TKIf" data-var="unstable2">Unstable</div>
+        </div>
+    </div>
 
 </div>
 </div>
