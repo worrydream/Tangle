@@ -287,7 +287,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     }
 
     function setValue(varName, value) {
-        var obj = {}
+        var obj = {};
         obj[varName] = value;
         setValues(obj);
     }
@@ -359,7 +359,7 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
     // debug
 
     function log (msg) {
-        if (window.console) window.console.log(msg);
+        if (window.console) { window.console.log(msg); }
     }
 
 };  // end of Tangle
@@ -372,5 +372,5 @@ var Tangle = this.Tangle = function (rootElement, modelClass) {
 Tangle.classes = {};
 Tangle.formats = {};
 
-Tangle.formats["default"] = function (value) { return "" + value; }
+Tangle.formats["default"] = function (value) { return "" + value; };
 

@@ -133,7 +133,7 @@ The cookies cost $&lt;span data-var="<b>cost quantity</b>" data-format="<b>%.2f 
 &lt;span class="TKAdjustableNumber" data-var="cookies" <b>data-min="0" data-max="20"</b>&gt;
 </pre>
 
-<p>These additional attributes are passed to the class's <code>initialize</code> method, via the <code>options</code> parameter.</p>
+<p>These additional attributes are passed to the class's <code>initialize</code> method, via the <a href="#options"><code>options</code></a> parameter.</p>
 
 <p>For details on what attributes a class accepts, see the documentation for the individual class.</p>
 
@@ -360,7 +360,7 @@ Tangle.classes.MyClass = {
 <p>This is useful for two-dimensional controls that adjust two variables at once, or views that display multiple variables.</p>
 
 
-<h4>options</h4>
+<h4 id="options">options</h4>
 
 <p>The <code>initialize</code> method is passed an <code><b>options</b></code> parameter:</p>
 
@@ -398,7 +398,7 @@ Tangle.formats.myFormat = function (value) { return "..."; }
 <p>A Tangle format defines how to present a value.  If your HTML is:</p>
 
 <pre>
-&lt;span data-var="fractionOfCookiesRemainng" <b>data-format="percent"</b>&gt;
+&lt;span data-var="fractionOfCookiesRemaining" <b>data-format="percent"</b>&gt;
 </pre>
 
 <p>then when the variable is updated, the following function will be called to turn the value into a string.</p>
@@ -446,7 +446,7 @@ Tangle.formats.myFormat = function (value, size) { return "..."; }
 
 <p>TangleKit is an optional collection of Tangle classes and formats, for adjusting variables and visualizing values.  You can grab whichever components you want, use them, extend them, modify them, or just learn from them and make your own.</p>
 
-<p>TangleKit is currently pretty rudimentary, and not yet documented here.  You can look through <a href="TangleKit/TangleKit.js">TangleKit.js</a> for what's currently available.</p>
+<p>TangleKit is currently pretty rudimentary, and not yet documented here.  You can look through <a href="TangleKit/TangleKit.js">TangleKit.js</a> for what's currently available.  Perhaps you'd even like to contribute to it.</p>
 
 
 </div> <!-- body -->
@@ -458,7 +458,7 @@ Tangle.formats.myFormat = function (value, size) { return "..."; }
 <div id="footer">
 <div id="footerShadow"></div>
 
-<div class="author">by <a href="http://worrydream.com/">Bret Victor</a></div>
+<div class="author"><a href="http://worrydream.com/">Bret Victor</a></div>
 
 <div class="menu">
     <a href="guide.html">Getting Started</a> &nbsp; &nbsp;

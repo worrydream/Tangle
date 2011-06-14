@@ -121,7 +121,7 @@ var BVTouchable = this.BVTouchable = new Class ({
 	
 	_touchCancel: function (event) {
 		this._touchEnd(event);
-	},
+	}
 
 });
 
