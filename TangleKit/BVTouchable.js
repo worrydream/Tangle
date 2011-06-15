@@ -16,6 +16,7 @@ var BVTouchable = this.BVTouchable = new Class ({
 		this.setTouchable(true);
 	},
 	
+
 	//----------------------------------------------------------------------------------
 	//
 	//  touches
@@ -50,7 +51,6 @@ var BVTouchable = this.BVTouchable = new Class ({
 	touchDidGoDown: function (touches) { this.delegate.touchDidGoDown(touches); },
 	touchDidMove: function (touches) { this.delegate.touchDidMove(touches);  },
 	touchDidGoUp: function (touches) { this.delegate.touchDidGoUp(touches);  },
-
 	
 	_mouseDown: function (event) {
 		event.stop();
@@ -65,14 +65,13 @@ var BVTouchable = this.BVTouchable = new Class ({
 
 	_mouseMove: function (event) {
 		event.stop();
-		this.touches.updateWithEvent(event);
+		this.touches._updateWithEvent(event);
 		this.touchDidMove(this.touches);
 	},
 
 	_mouseUp: function (event) {
 		event.stop();
-		this.touches.updateWithEvent(event);
-		this.touches.count = 0;
+		this.touches._goUpWithEvent(event);
 		this.touchDidGoUp(this.touches);
 		
 		delete this.touches;
@@ -100,7 +99,7 @@ var BVTouchable = this.BVTouchable = new Class ({
 		event.stop();
 		if (!this.touches) { return; }
 
-		this.touches.updateWithEvent(event);
+		this.touches._updateWithEvent(event);
 		this.touchDidMove(this.touches);
 	},
 	
@@ -108,7 +107,7 @@ var BVTouchable = this.BVTouchable = new Class ({
 		event.stop();
 		if (!this.touches) { return; }
 
-		this.touches.count = 0;
+		this.touches._goUpWithEvent(event);
 		this.touchDidGoUp(this.touches);
 		
 		delete this.touches;
@@ -137,20 +136,47 @@ var BVTouches = this.BVTouches = new Class({
 		this.globalPoint = { x:event.page.x, y:-event.page.y };
 		this.translation = { x:0, y:0 };
 		this.deltaTranslation = { x:0, y:0 };
+		this.velocity = { x:0, y:0 };
 		this.count = 1;
 		this.event = event;
+		this.timestamp = event.event.timeStamp;
+		this.downTimestamp = this.timestamp;
 	},
 	
-	updateWithEvent: function (event) {
-		var dx = event.page.x - this.globalPoint.x;  // todo, transform to local coordinate space?
-		var dy = -event.page.y - this.globalPoint.y;
-		this.translation.x += dx;
-		this.translation.y += dy;
-		this.deltaTranslation.x += dx;
-		this.deltaTranslation.y += dy;
-		this.globalPoint.x = event.page.x;
-		this.globalPoint.y = -event.page.y;
+	_updateWithEvent: function (event, isRemoving) {
 		this.event = event;
+		if (!isRemoving) {
+			var dx = event.page.x - this.globalPoint.x;  // todo, transform to local coordinate space?
+			var dy = -event.page.y - this.globalPoint.y;
+			this.translation.x += dx;
+			this.translation.y += dy;
+			this.deltaTranslation.x += dx;
+			this.deltaTranslation.y += dy;
+			this.globalPoint.x = event.page.x;
+			this.globalPoint.y = -event.page.y;
+		}
+
+		var timestamp = event.event.timeStamp;
+		var dt = timestamp - this.timestamp;
+		var isSamePoint = isRemoving || (dx === 0 && dy === 0);
+		var isStopped = (isSamePoint && dt > 150);
+		
+		this.velocity.x = isStopped ? 0 : (isSamePoint || dt === 0) ? this.velocity.x : (dx / dt * 1000);
+		this.velocity.y = isStopped ? 0 : (isSamePoint || dt === 0) ? this.velocity.y : (dy / dt * 1000);
+		this.timestamp = timestamp;
+	},
+	
+	_goUpWithEvent: function (event) {
+		this._updateWithEvent(event, true);
+		this.count = 0;
+		
+		var didMove = Math.abs(this.translation.x) > 10 || Math.abs(this.translation.y) > 10;
+		var wasMoving = Math.abs(this.velocity.x) > 400 || Math.abs(this.velocity.y) > 400;
+		this.wasTap = !didMove && !wasMoving && (this.getTimeSinceGoingDown() < 300);
+	},
+	
+	getTimeSinceGoingDown: function () {
+		return this.timestamp - this.downTimestamp;
 	},
 	
 	resetDeltaTranslation: function () {

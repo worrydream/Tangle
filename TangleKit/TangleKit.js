@@ -222,11 +222,11 @@ Tangle.classes.TKAdjustableNumber = {
     },
     
     touchDidGoUp: function (touches) {
-        this.helpElement.setStyle("display", "none");
         this.isDragging = false;
         isAnyAdjustableNumberDragging = false;
         this.updateRolloverEffects();
         this.updateStyle();
+        this.helpElement.setStyle("display", touches.wasTap ? "block" : "none");
     }
 };
 
