@@ -139,8 +139,8 @@ Tangle.classes.TKAdjustableNumber = {
         this.tangle = tangle;
         this.variable = variable;
 
-        this.min = (options.min !== undefined) ? parseFloat(options.min) : 1;
-        this.max = (options.max !== undefined) ? parseFloat(options.max) : 10;
+        this.min = (options.min !== undefined) ? parseFloat(options.min) : 0;
+        this.max = (options.max !== undefined) ? parseFloat(options.max) : 1e100;
         this.step = (options.step !== undefined) ? parseFloat(options.step) : 1;
         
         this.initializeHover();
