@@ -26,7 +26,8 @@ Tangle.classes.TKIf = {
     
     update: function (element, value) {
         if (this.isInverted) { value = !value; }
-        element.style.display = !value ? "none" : "inline";   // todo, block or inline?
+        if (value) { element.style.removeProperty("display"); } 
+        else { element.style.display = "none" };
     }
 };
 
@@ -43,7 +44,8 @@ Tangle.classes.TKSwitch = {
 
     update: function (element, value) {
         element.getChildren().each( function (child, index) {
-            child.style.display = (index != value) ? "none" : "inline";
+            if (index != value) { child.style.display = "none"; } 
+            else { child.style.removeProperty("display"); }
         });
     }
 };
